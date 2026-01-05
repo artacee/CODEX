@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TRACKS } from '../constants';
 import { KineticText } from './ui/KineticText';
+import { ProblemStatementsModal } from './ProblemStatementsModal';
+import { Track } from '../types';
 
 export const Tracks: React.FC = () => {
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
+
   return (
     <section id="tracks" className="py-32 bg-background relative overflow-hidden">
       {/* Abstract overlapping shapes */}
@@ -44,10 +48,11 @@ export const Tracks: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               // Staggered layout: Shift even items down on desktop
-              className={`${index % 2 === 1 ? 'md:mt-32' : 'md:mt-0'} group relative`}
+              className={`${index % 2 === 1 ? 'md:mt-32' : 'md:mt-0'} group relative cursor-pointer`}
+              onClick={() => setSelectedTrack(track)}
             >
               <div 
-                className="relative p-10 rounded-[2rem] bg-surface border border-white/5 overflow-hidden min-h-[400px] flex flex-col justify-between hover:border-white/20 transition-all duration-500"
+                className="relative p-10 rounded-[2rem] bg-surface border border-white/5 overflow-hidden min-h-[450px] flex flex-col justify-between hover:border-white/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/5"
                 data-cursor="hover"
               >
                 {/* Asymmetric blob background */}
@@ -61,17 +66,26 @@ export const Tracks: React.FC = () => {
                      </div>
                   </div>
                   
-                  <h3 className="font-display font-bold text-4xl mb-6 leading-tight group-hover:text-primary transition-colors">{track.title}</h3>
-                  <p className="text-muted text-lg leading-relaxed">{track.description}</p>
+                  <h3 className="font-display font-bold text-4xl mb-4 leading-tight group-hover:text-primary transition-colors">{track.title}</h3>
+                  <p className="text-muted text-lg leading-relaxed mb-6">{track.description}</p>
+                  
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {track.tags.map((tag) => (
+                      <span key={tag} className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono uppercase tracking-wide text-white/70 group-hover:bg-white/10 transition-colors">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mt-12 flex items-center justify-between">
                   <div className="h-px w-full bg-white/10 group-hover:bg-white/30 transition-colors mr-6" />
                   <motion.div 
                      whileHover={{ x: 5 }}
-                     className="text-sm font-bold uppercase tracking-wider"
+                     className="text-sm font-bold uppercase tracking-wider text-primary"
                   >
-                    Explore
+                    View Problem Statements
                   </motion.div>
                 </div>
               </div>
@@ -79,6 +93,12 @@ export const Tracks: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <ProblemStatementsModal 
+        isOpen={!!selectedTrack}
+        onClose={() => setSelectedTrack(null)}
+        track={selectedTrack}
+      />
     </section>
   );
 };

@@ -6,10 +6,12 @@ export interface NavItem {
 }
 
 export interface Track {
+  id: string; // Added for filtering
   title: string;
   description: string;
   icon: LucideIcon;
   color: string;
+  tags: string[];
 }
 
 export interface Prize {
@@ -28,4 +30,19 @@ export interface Sponsor {
 export interface FaqItem {
   question: string;
   answer: string;
+}
+
+export interface ProblemStatement {
+  id: string;
+  title: string;
+  category: string | null;
+  theme: string;
+  trackId: string; // To link with Track
+  sections: {
+    background: string | null;
+    description: string | null;
+    challenge: string | null;
+    ask: string | null;
+    expected_solution: string | null;
+  };
 }

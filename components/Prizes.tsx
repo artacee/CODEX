@@ -65,35 +65,38 @@ export const Prizes: React.FC = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="flex flex-col md:flex-row items-center md:items-end justify-center max-w-6xl mx-auto"
+          className="flex flex-col md:flex-row items-center md:items-end justify-center max-w-6xl mx-auto min-h-[500px]"
         >
           {/* 
-            Mobile Order: 1st, 2nd, 3rd (Natural DOM order)
-            Desktop Order: 2nd, 1st, 3rd (Using flex order)
+             Array is reordered to: [1st Place Obj, 2nd Place Obj, 3rd Place Obj]
+             This allows us to map them, but visual order on Desktop will be controlled by CSS 'order' property.
+             
+             Visual Desired Order (Left to Right): 2nd, 1st, 3rd
+             Vertical Height: 1st (Highest), 2nd (Middle), 3rd (Lowest)
           */}
           {[PRIZES[1], PRIZES[0], PRIZES[2]].map((prize, index) => {
-            // Array is [1st, 2nd, 3rd]
-            const isFirst = index === 0;
-            const isSecond = index === 1;
-            const isThird = index === 2;
+            const isFirst = index === 0;  // 1st Place Data
+            const isSecond = index === 1; // 2nd Place Data
+            const isThird = index === 2;  // 3rd Place Data
 
             return (
               <motion.div
                 key={prize.place}
                 variants={item}
                 className={`
-                    relative w-full md:w-[35%] 
-                    ${isFirst ? 'z-20 md:-mb-12 md:order-2' : 'z-10'}
-                    ${isSecond ? 'md:-mr-12 md:order-1' : ''} 
-                    ${isThird ? 'md:-ml-12 md:order-3' : ''}
-                    mb-8 md:mb-0
+                    relative w-full md:w-[32%] 
+                    mb-8 md:mb-0 transition-all duration-500
+                    ${isFirst ? 'md:order-2 z-30 md:mb-24' : ''}
+                    ${isSecond ? 'md:order-1 z-20 md:mb-12 md:-mr-4' : ''} 
+                    ${isThird ? 'md:order-3 z-10 md:mb-0 md:-ml-4' : ''}
                 `}
                 data-cursor="hover"
               >
                 <div 
                     className={`
                         relative p-1 rounded-[2.5rem] bg-gradient-to-b ${prize.color} 
-                        ${isFirst ? 'shadow-[0_0_80px_rgba(255,215,0,0.15)]' : ''}
+                        ${isFirst ? 'shadow-[0_0_80px_rgba(255,215,0,0.15)] md:scale-105' : 'md:scale-95 opacity-90 hover:opacity-100 hover:scale-100'}
+                        transition-all duration-500
                     `}
                 >
                     <div className="bg-[#0A0A0A] rounded-[2.3rem] p-8 md:p-10 h-full flex flex-col items-center text-center relative overflow-hidden group">
@@ -108,7 +111,7 @@ export const Prizes: React.FC = () => {
                         </motion.div>
                         
                         <h3 className="font-display font-bold text-2xl uppercase tracking-wider mb-2">{prize.place}</h3>
-                        <div className={`text-5xl md:text-6xl font-bold mb-10 ${isFirst ? 'text-white' : 'text-white/80'}`}>{prize.amount}</div>
+                        <div className={`text-4xl md:text-5xl font-bold mb-10 ${isFirst ? 'text-white' : 'text-white/80'}`}>{prize.amount}</div>
                         
                         <ul className="space-y-4 w-full">
                             {prize.perks.map((perk, i) => (

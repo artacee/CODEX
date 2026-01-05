@@ -4,7 +4,7 @@ import { Hero } from './Hero';
 import { Marquee } from './ui/Marquee';
 import { About } from './About';
 import { Tracks } from './Tracks';
-import { IdeaGenerator } from './IdeaGenerator';
+import { Timeline } from './Timeline';
 import { Prizes } from './Prizes';
 import { FAQ } from './FAQ';
 import { SPONSORS } from '../constants';
@@ -44,7 +44,7 @@ export const Home: React.FC = () => {
       
       <Tracks />
       
-      <IdeaGenerator />
+      <Timeline />
       
       <Prizes />
 

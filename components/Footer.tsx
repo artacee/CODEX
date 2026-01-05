@@ -20,7 +20,9 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-6">
               <Magnetic>
                 <a 
-                  href="#" 
+                  href="https://www.instagram.com/codex.tki?igsh=MTZ3dDNhNWR2Zzl6Mw==" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-muted hover:text-primary transition-colors block"
                   aria-label="Instagram"
                   data-cursor="hover"
