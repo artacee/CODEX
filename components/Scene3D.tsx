@@ -7,7 +7,16 @@ import * as THREE from 'three';
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      [elemName: string]: any;
+      instancedMesh: any;
+      boxGeometry: any;
+      meshBasicMaterial: any;
+      group: any;
+      mesh: any;
+      icosahedronGeometry: any;
+      meshStandardMaterial: any;
+      torusGeometry: any;
+      ambientLight: any;
+      pointLight: any;
     }
   }
 }

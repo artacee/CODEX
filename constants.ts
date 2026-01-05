@@ -49,19 +49,19 @@ export const PRIZES: Prize[] = [
   {
     place: '2nd Place',
     amount: '₹25,000',
-    perks: ['Silver Trophy', 'Certificates', 'Swag Kits'],
+    perks: ['Silver Trophy', 'Certificates'],
     color: 'from-gray-300 to-gray-500'
   },
   {
     place: '1st Place',
     amount: '₹50,000',
-    perks: ['Gold Trophy', 'Direct Internship Opportunity', 'Certificates'],
+    perks: ['Gold Trophy', 'Certificates'],
     color: 'from-yellow-300 to-yellow-600'
   },
   {
     place: '3rd Place',
     amount: '₹10,000',
-    perks: ['Bronze Trophy', 'Certificates', 'Swag Kits'],
+    perks: ['Bronze Trophy', 'Certificates'],
     color: 'from-orange-300 to-orange-600'
   }
 ];

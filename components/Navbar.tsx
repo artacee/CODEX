@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         <div className="container mx-auto px-6">
           <div className={`glass rounded-full px-6 py-3 flex items-center justify-between transition-all duration-500 ease-[0.22,1,0.36,1] ${isScrolled ? 'bg-black/80' : 'bg-black/40'}`}>
             <a href="#" onClick={handleLogoClick} className="flex items-center gap-2" data-cursor="hover">
-              <CodexLogo className="text-2xl md:text-3xl" />
+              <CodexLogo className="h-8 md:h-10 w-auto" />
             </a>
 
             {/* Desktop Nav */}

@@ -23,7 +23,6 @@ const App: React.FC = () => {
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      smoothTouch: false,
       touchMultiplier: 2,
     });
     

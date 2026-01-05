@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="text-center md:text-left">
           <div className="mb-4 flex justify-center md:justify-start">
-             <CodexLogo className="text-3xl" />
+             <CodexLogo className="h-10 w-auto" />
           </div>
           <p className="text-white/60 text-sm mb-1 font-medium">Department of Computer Science & Engineering</p>
           <p className="text-muted text-xs">TKM Institute of Technology, Musaliar Hills, Kollam</p>

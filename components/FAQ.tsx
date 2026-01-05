@@ -8,26 +8,29 @@ export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 relative bg-surface">
+    <section id="faq" className="py-32 relative bg-surface scroll-mt-32">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <h2 className="font-display font-bold text-5xl mb-6">
-                <KineticText>FAQ</KineticText>
-            </h2>
-            <p className="text-muted text-lg mb-8">Everything you need to know about the event.</p>
-            
-            <div className="hidden md:block p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                <h4 className="font-bold text-white mb-2">Still have questions?</h4>
-                <p className="text-muted text-sm mb-4">Can't find the answer you're looking for? Please chat to our friendly team.</p>
-                <a href="mailto:codex@tkmit.ac.in" data-cursor="hover" className="text-primary hover:underline text-sm font-medium">Get in touch</a>
-            </div>
-          </motion.div>
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          {/* Sticky Container - Separated from Motion for stability */}
+          <div className="md:sticky md:top-40 h-fit">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <h2 className="font-display font-bold text-5xl mb-6">
+                  <KineticText>FAQ</KineticText>
+              </h2>
+              <p className="text-muted text-lg mb-8">Everything you need to know about the event.</p>
+              
+              <div className="hidden md:block p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                  <h4 className="font-bold text-white mb-2">Still have questions?</h4>
+                  <p className="text-muted text-sm mb-4">Can't find the answer you're looking for? Please chat to our friendly team.</p>
+                  <a href="mailto:codex@tkmit.ac.in" data-cursor="hover" className="text-primary hover:underline text-sm font-medium">Get in touch</a>
+              </div>
+            </motion.div>
+          </div>
           
           <div className="space-y-4">
             {FAQS.map((faq, index) => {
