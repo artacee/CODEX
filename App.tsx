@@ -92,11 +92,12 @@ const App: React.FC = () => {
       {!isLoading && (
         <>
           {/* 3D Scene Background - Persistent across pages */}
+          {/* Removed pointer-events-none to allow rotation interaction */}
           <motion.div
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
              transition={{ duration: 2 }}
-             className="fixed inset-0 z-0 pointer-events-none"
+             className="fixed inset-0 z-0"
           >
              <Scene3D />
           </motion.div>
@@ -105,7 +106,8 @@ const App: React.FC = () => {
           <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
 
           {/* Main Content Area with Page Transitions */}
-          <div className="relative z-10 min-h-screen flex flex-col justify-between">
+          <div className="relative z-10 min-h-screen flex flex-col justify-between pointer-events-none">
+            {/* Wrap inner content in pointer-events-auto so it remains clickable */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentPage}
@@ -113,7 +115,7 @@ const App: React.FC = () => {
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="flex-grow"
+                className="flex-grow pointer-events-auto"
               >
                 {currentPage === 'home' ? (
                   <Home />
@@ -123,7 +125,9 @@ const App: React.FC = () => {
               </motion.div>
             </AnimatePresence>
             
-            <Footer />
+            <div className="pointer-events-auto">
+                <Footer />
+            </div>
           </div>
         </>
       )}

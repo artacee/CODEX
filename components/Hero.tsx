@@ -21,6 +21,13 @@ export const Hero: React.FC = () => {
 
   const cinemticEase = [0.22, 1, 0.36, 1] as const;
 
+  // Google Calendar URL (Jan 27 10:00 AM IST to Jan 28 10:00 AM IST -> 04:30 UTC)
+  const googleCalendarUrl = encodeURI(
+    "https://calendar.google.com/calendar/render?action=TEMPLATE&text=CODEX 2026 - Gen AI Hackathon&dates=20260127T043000Z/20260128T043000Z&details=Join the revolution at CODEX 2026! A 24-hour Gen AI Hackathon at TKM Institute of Technology.&location=TKM Institute of Technology, Karuvelil, Kerala"
+  );
+  
+  const mapsUrl = "https://maps.app.goo.gl/WgmxeVuQPEu4GKyv7";
+
   return (
     <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-20">
       
@@ -129,21 +136,34 @@ export const Hero: React.FC = () => {
           <Countdown />
         </motion.div>
 
-        {/* Event Details Pills */}
+        {/* Event Details Pills - Now Clickable Links */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: cinemticEase }}
           className="flex flex-wrap justify-center gap-4 mb-12"
         >
-          <div className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default">
-            <Calendar className="w-5 h-5 text-primary" />
-            <span className="text-gray-200 font-medium">January 27 & 28, 2026</span>
-          </div>
-          <div className="flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default">
-            <MapPin className="w-5 h-5 text-secondary" />
-            <span className="text-gray-200 font-medium">TKM Institute of Technology</span>
-          </div>
+          <a 
+            href={googleCalendarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="hover"
+            className="group flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-primary/50 transition-all cursor-pointer"
+          >
+            <Calendar className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+            <span className="text-gray-200 font-medium group-hover:text-white transition-colors">January 27 & 28, 2026</span>
+          </a>
+
+          <a 
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="hover"
+            className="group flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-secondary/50 transition-all cursor-pointer"
+          >
+            <MapPin className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform" />
+            <span className="text-gray-200 font-medium group-hover:text-white transition-colors">TKM Institute of Technology</span>
+          </a>
         </motion.div>
 
         {/* CTA Buttons */}

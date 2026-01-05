@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Stars, Environment, PerspectiveCamera } from '@react-three/drei';
+import { Stars, Environment, PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Fix for missing JSX intrinsic elements in some environments
@@ -13,7 +13,7 @@ declare global {
 }
 
 const Particles = () => {
-  const count = 100; // Restored high particle count
+  const count = 100;
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   
@@ -82,9 +82,9 @@ const Geometries = () => {
     const time = state.clock.getElapsedTime();
     const scrollY = window.scrollY;
     
-    // Mouse Parallax
-    const parallaxX = state.pointer.x * 0.5;
-    const parallaxY = state.pointer.y * 0.5;
+    // Mouse Parallax - Reduced intensity to not conflict with OrbitControls
+    const parallaxX = state.pointer.x * 0.2;
+    const parallaxY = state.pointer.y * 0.2;
 
     if (groupRef.current) {
         groupRef.current.rotation.y = scrollY * 0.0002 + time * 0.05;
@@ -108,7 +108,6 @@ const Geometries = () => {
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
         <group position={[0, 0, 0]}>
-            {/* Inner Glowing Core */}
             <mesh ref={icosahedronRef}>
                 <icosahedronGeometry args={[1.5, 0]} />
                 <meshStandardMaterial 
@@ -121,7 +120,6 @@ const Geometries = () => {
                 />
             </mesh>
             
-            {/* Outer Ring - High Fidelity (16 segments, 100 radial) */}
             <mesh ref={torusRef} rotation={[Math.PI / 2, 0, 0]}>
                 <torusGeometry args={[3, 0.02, 16, 100]} />
                 <meshStandardMaterial 
@@ -132,7 +130,6 @@ const Geometries = () => {
                 />
             </mesh>
 
-            {/* Particles */}
             <Particles />
         </group>
     </group>
@@ -141,12 +138,26 @@ const Geometries = () => {
 
 export const Scene3D: React.FC = () => {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
+    <div className="fixed inset-0 z-0">
       <Canvas 
         gl={{ antialias: true, alpha: true }} 
         dpr={[1, 2]}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
+        
+        {/* 
+            OrbitControls configured for background interaction:
+            - enableZoom={false}: PREVENTS SCROLL HIJACKING (Fixes 2-finger scroll)
+            - enableRotate={true}: Allows user to spin the model
+        */}
+        <OrbitControls 
+            enableZoom={false} 
+            enablePan={false} 
+            enableRotate={true}
+            rotateSpeed={0.5}
+            dampingFactor={0.1}
+            enableDamping={true}
+        />
         
         <ambientLight intensity={0.5} color="#ffffff" />
         <pointLight position={[10, 10, 10]} intensity={1} color="#2EFF7B" />

@@ -68,12 +68,13 @@ export const Prizes: React.FC = () => {
           className="flex flex-col md:flex-row items-center md:items-end justify-center max-w-6xl mx-auto"
         >
           {/* 
-            Order prizes to show 2nd, 1st, 3rd visually in a podium structure.
-            On desktop, we use negative margins to create overlap.
+            Mobile Order: 1st, 2nd, 3rd (Natural DOM order)
+            Desktop Order: 2nd, 1st, 3rd (Using flex order)
           */}
-          {[PRIZES[0], PRIZES[1], PRIZES[2]].map((prize, index) => {
-            const isFirst = index === 1;
-            const isSecond = index === 0;
+          {[PRIZES[1], PRIZES[0], PRIZES[2]].map((prize, index) => {
+            // Array is [1st, 2nd, 3rd]
+            const isFirst = index === 0;
+            const isSecond = index === 1;
             const isThird = index === 2;
 
             return (
@@ -82,9 +83,9 @@ export const Prizes: React.FC = () => {
                 variants={item}
                 className={`
                     relative w-full md:w-[35%] 
-                    ${isFirst ? 'z-20 md:-mb-12' : 'z-10'}
-                    ${isSecond ? 'md:-mr-12' : ''} 
-                    ${isThird ? 'md:-ml-12' : ''}
+                    ${isFirst ? 'z-20 md:-mb-12 md:order-2' : 'z-10'}
+                    ${isSecond ? 'md:-mr-12 md:order-1' : ''} 
+                    ${isThird ? 'md:-ml-12 md:order-3' : ''}
                     mb-8 md:mb-0
                 `}
                 data-cursor="hover"
@@ -103,7 +104,7 @@ export const Prizes: React.FC = () => {
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index }}
                         >
-                            <Trophy className={`w-16 h-16 mb-8 ${isFirst ? 'text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]' : index === 0 ? 'text-gray-300' : 'text-orange-400'}`} />
+                            <Trophy className={`w-16 h-16 mb-8 ${isFirst ? 'text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]' : isSecond ? 'text-gray-300' : 'text-orange-400'}`} />
                         </motion.div>
                         
                         <h3 className="font-display font-bold text-2xl uppercase tracking-wider mb-2">{prize.place}</h3>

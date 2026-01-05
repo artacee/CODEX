@@ -2,9 +2,10 @@ import React from 'react';
 import { motion, HTMLMotionProps } from 'framer-motion';
 import { Magnetic } from './Magnetic';
 
-interface ButtonProps extends HTMLMotionProps<"button"> {
+interface ButtonProps extends Omit<HTMLMotionProps<"button">, 'children'> {
   variant?: 'primary' | 'secondary' | 'outline';
   icon?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({ 
