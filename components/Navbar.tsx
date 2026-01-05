@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
-import { CodexLogo } from './ui/CodexLogo';
 import { Magnetic } from './ui/Magnetic';
 
 interface NavbarProps {
@@ -60,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         <div className="container mx-auto px-6">
           <div className={`glass rounded-full px-6 py-3 flex items-center justify-between transition-all duration-500 ease-[0.22,1,0.36,1] ${isScrolled ? 'bg-black/80' : 'bg-black/40'}`}>
             <a href="#" onClick={handleLogoClick} className="flex items-center gap-2" data-cursor="hover">
-              <CodexLogo className="text-2xl md:text-3xl" />
+              <img src="/logo.png" alt="Logo" className="h-8 md:h-10" />
             </a>
 
             {/* Desktop Nav */}
