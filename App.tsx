@@ -1,22 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Tracks } from './components/Tracks';
-import { Prizes } from './components/Prizes';
-import { IdeaGenerator } from './components/IdeaGenerator';
-import { FAQ } from './components/FAQ';
+import { Home } from './components/Home';
+import { Register } from './components/Register';
 import { Footer } from './components/Footer';
-import { SPONSORS } from './constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader } from './components/Loader';
 import { Cursor } from './components/ui/Cursor';
-import { Marquee } from './components/ui/Marquee';
 import { Scene3D } from './components/Scene3D';
 import Lenis from 'lenis';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState('home');
   const lenisRef = useRef<Lenis | null>(null);
 
   // Initialize Momentum Scrolling (Lenis)
@@ -54,15 +49,11 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isLoading) {
       document.body.style.overflow = 'hidden';
-      // Stop lenis while loading
       if (lenisRef.current) lenisRef.current.stop();
     } else {
-      // Clear overflow style to return to CSS defaults
       document.body.style.overflow = ''; 
-      // Resume lenis and force resize calculation
       if (lenisRef.current) {
         lenisRef.current.start();
-        // Give the DOM a moment to paint the new content before resizing Lenis
         setTimeout(() => {
              lenisRef.current?.resize();
         }, 100);
@@ -70,25 +61,24 @@ const App: React.FC = () => {
     }
   }, [isLoading]);
 
-  const sponsorContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+  const handleNavigate = (page: string) => {
+    if (page === currentPage) return;
+    
+    // Smooth scroll to top before transition
+    lenisRef.current?.scrollTo(0, { immediate: false, duration: 0.5 });
+    
+    // Slight delay to allow scroll to start
+    setTimeout(() => {
+       setCurrentPage(page);
+    }, 100);
   };
 
-  const sponsorItem = {
-    hidden: { opacity: 0, scale: 0.8 },
-    show: { 
-        opacity: 1, 
-        scale: 1,
-        transition: {
-            duration: 0.6,
-            ease: [0.22, 1, 0.36, 1] as const
-        }
+  // Reset scroll on page change
+  useEffect(() => {
+    if(!isLoading) {
+        lenisRef.current?.scrollTo(0, { immediate: true });
     }
-  };
+  }, [currentPage, isLoading]);
 
   return (
     <div className="min-h-screen bg-background text-text selection:bg-primary selection:text-black relative">
@@ -101,7 +91,7 @@ const App: React.FC = () => {
       
       {!isLoading && (
         <>
-          {/* 3D Scene Background - Loaded after preloader */}
+          {/* 3D Scene Background - Persistent across pages */}
           <motion.div
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
@@ -111,69 +101,30 @@ const App: React.FC = () => {
              <Scene3D />
           </motion.div>
 
-          <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
-              className="relative z-10"
-          >
-            <Navbar />
+          {/* Navigation - Persistent */}
+          <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+
+          {/* Main Content Area with Page Transitions */}
+          <div className="relative z-10 min-h-screen flex flex-col justify-between">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentPage}
+                initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="flex-grow"
+              >
+                {currentPage === 'home' ? (
+                  <Home />
+                ) : (
+                  <Register onBack={() => handleNavigate('home')} />
+                )}
+              </motion.div>
+            </AnimatePresence>
             
-            <Hero />
-
-            <Marquee />
-
-            <About />
-            
-            <Tracks />
-            
-            <IdeaGenerator />
-            
-            <Prizes />
-
-            {/* Sponsors Section */}
-            <section id="sponsors" className="py-24 border-t border-white/5 bg-background/50 backdrop-blur-sm">
-              <div className="container mx-auto px-6 text-center">
-                <motion.h2 
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-                  className="font-display font-bold text-3xl mb-12 text-muted uppercase tracking-widest"
-                >
-                  Backed By Industry Leaders
-                </motion.h2>
-                
-                <motion.div 
-                  variants={sponsorContainer}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true }}
-                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center"
-                >
-                  {SPONSORS.map((sponsor) => (
-                    <motion.div 
-                      key={sponsor.name}
-                      variants={sponsorItem}
-                      whileHover={{ 
-                          scale: 1.1, 
-                          filter: "grayscale(0%)", 
-                          opacity: 1,
-                          transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const } 
-                      }}
-                      className="flex items-center justify-center p-4 opacity-50 grayscale transition-all duration-500"
-                    >
-                      <img src={sponsor.logo} alt={sponsor.name} className="h-8 md:h-10 object-contain invert" />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
-            </section>
-
-            <FAQ />
-
             <Footer />
-          </motion.div>
+          </div>
         </>
       )}
     </div>

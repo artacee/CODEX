@@ -5,7 +5,12 @@ import { NAV_ITEMS } from '../constants';
 import { CodexLogo } from './ui/CodexLogo';
 import { Magnetic } from './ui/Magnetic';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  currentPage: string;
+  onNavigate: (page: string) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -16,6 +21,31 @@ export const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavClick = (href: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (currentPage !== 'home') {
+      onNavigate('home');
+      // Wait for navigation then scroll
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 800);
+    } else {
+      const element = document.querySelector(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (currentPage === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      onNavigate('home');
+    }
+  };
 
   return (
     <>
@@ -29,7 +59,7 @@ export const Navbar: React.FC = () => {
       >
         <div className="container mx-auto px-6">
           <div className={`glass rounded-full px-6 py-3 flex items-center justify-between transition-all duration-500 ease-[0.22,1,0.36,1] ${isScrolled ? 'bg-black/80' : 'bg-black/40'}`}>
-            <a href="#" className="flex items-center gap-2" data-cursor="hover">
+            <a href="#" onClick={handleLogoClick} className="flex items-center gap-2" data-cursor="hover">
               <CodexLogo className="text-2xl md:text-3xl" />
             </a>
 
@@ -39,6 +69,7 @@ export const Navbar: React.FC = () => {
                 <Magnetic key={item.label}>
                   <a
                     href={item.href}
+                    onClick={(e) => handleNavClick(item.href, e)}
                     data-cursor="hover"
                     className="text-sm font-medium text-muted hover:text-white transition-colors uppercase tracking-wide inline-block"
                   >
@@ -48,6 +79,7 @@ export const Navbar: React.FC = () => {
               ))}
               <Magnetic>
                 <motion.button
+                  onClick={() => onNavigate('register')}
                   data-cursor="hover"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -94,15 +126,27 @@ export const Navbar: React.FC = () => {
                 <motion.a
                   key={item.label}
                   href={item.href}
+                  onClick={(e) => handleNavClick(item.href, e)}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + idx * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  onClick={() => setIsMobileMenuOpen(false)}
                   className="font-display text-4xl font-bold text-white hover:text-primary transition-colors"
                 >
                   {item.label}
                 </motion.a>
               ))}
+              <motion.button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onNavigate('register');
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="mt-4 bg-primary text-black px-8 py-4 rounded-full font-bold text-xl uppercase"
+              >
+                Register Now
+              </motion.button>
             </div>
           </motion.div>
         )}

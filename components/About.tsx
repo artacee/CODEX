@@ -51,7 +51,7 @@ export const About: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="md:w-3/5 relative md:pr-20"
+                className="md:w-3/5 relative md:pr-20 z-20"
             >
                 <div className="absolute -top-20 -left-20 w-40 h-40 bg-primary/20 rounded-full blur-[80px]" />
                 <div className="relative border-l-2 border-white/10 pl-8 md:pl-16 py-2 backdrop-blur-sm">
@@ -72,7 +72,7 @@ export const About: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                className="md:w-3/5 md:self-end relative md:-mt-32 z-10"
+                className="md:w-3/5 md:self-end relative md:-mt-16 z-10"
             >
                 <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-secondary/10 rounded-full blur-[80px]" />
                  <div className="relative border-r-2 border-white/10 pr-8 md:pr-16 py-2 text-right backdrop-blur-sm flex flex-col items-end">
