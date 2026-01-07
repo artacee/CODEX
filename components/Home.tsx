@@ -50,14 +50,14 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <Prizes />
 
       {/* Sponsors Section - Scrolling Marquee */}
-      <section id="sponsors" className="py-32 border-t border-white/5 bg-[#f5f5f5] backdrop-blur-sm overflow-hidden">
+      <section id="sponsors" className="py-32 border-t border-black/10 bg-[#f5f5f5] overflow-hidden">
         <div className="container mx-auto px-6 text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-            className="font-display font-bold text-3xl text-white/40 uppercase tracking-[0.2em]"
+            className="font-display font-bold text-3xl text-black/60 uppercase tracking-[0.2em]"
           >
             Our Partners
           </motion.h2>
@@ -65,8 +65,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         
         <div className="relative w-full flex">
             {/* Gradient Masks for fade effect at edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-r from-[#f5f5f5] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 md:w-64 bg-gradient-to-l from-[#f5f5f5] to-transparent z-10 pointer-events-none" />
 
             <motion.div 
                 className="flex items-center gap-16 md:gap-32 min-w-max px-16"
@@ -83,7 +83,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                         className="group relative flex flex-col items-center justify-center cursor-pointer"
                         data-cursor="hover"
                     >
-                        <div className="relative h-12 md:h-16 w-32 md:w-48 flex items-center justify-center opacity-30 group-hover:opacity-100 transition-all duration-500 grayscale group-hover:grayscale-0 transform group-hover:scale-110">
+                        <div className="relative h-12 md:h-16 w-32 md:w-48 flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500 transform group-hover:scale-110">
                              <img 
                                 src={sponsor.logo} 
                                 alt={sponsor.name} 
