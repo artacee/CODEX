@@ -9,13 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-=======
     "react": "18.3.1",
     "react-dom": "18.3.1",
->>>>>>> ce369130c59aa5dc8bdf81cd2e456f0dfae70c0a
     "lucide-react": "0.344.0",
     "@google/genai": "1.34.0",
     "framer-motion": "11.0.8",
