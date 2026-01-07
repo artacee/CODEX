@@ -3,24 +3,6 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, Environment, PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Fix for missing JSX intrinsic elements in some environments
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      instancedMesh: any;
-      boxGeometry: any;
-      meshBasicMaterial: any;
-      group: any;
-      mesh: any;
-      icosahedronGeometry: any;
-      meshStandardMaterial: any;
-      torusGeometry: any;
-      ambientLight: any;
-      pointLight: any;
-    }
-  }
-}
-
 const Particles = () => {
   const count = 100;
   const meshRef = useRef<THREE.InstancedMesh>(null);
@@ -150,23 +132,9 @@ export const Scene3D: React.FC = () => {
     <div className="fixed inset-0 z-0">
       <Canvas 
         gl={{ antialias: true, alpha: true }} 
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
-        
-        {/* 
-            OrbitControls configured for background interaction:
-            - enableZoom={false}: PREVENTS SCROLL HIJACKING (Fixes 2-finger scroll)
-            - enableRotate={true}: Allows user to spin the model
-        */}
-        <OrbitControls 
-            enableZoom={false} 
-            enablePan={false} 
-            enableRotate={true}
-            rotateSpeed={0.5}
-            dampingFactor={0.1}
-            enableDamping={true}
-        />
         
         <ambientLight intensity={0.5} color="#ffffff" />
         <pointLight position={[10, 10, 10]} intensity={1} color="#2EFF7B" />

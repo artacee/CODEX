@@ -8,9 +8,12 @@ import { Timeline } from './Timeline';
 import { Prizes } from './Prizes';
 import { FAQ } from './FAQ';
 import { SPONSORS } from '../constants';
-import { ScrollProgress } from './ui/ScrollProgress';
 
-export const Home: React.FC = () => {
+interface HomeProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const { scrollYProgress } = useScroll();
   
   // Scrollytelling Background Transition
@@ -34,9 +37,7 @@ export const Home: React.FC = () => {
 
   return (
     <motion.div style={{ backgroundColor }} className="relative transition-colors duration-500">
-      <ScrollProgress />
-      
-      <Hero />
+      <Hero onNavigate={onNavigate} />
 
       <Marquee />
 
@@ -49,7 +50,7 @@ export const Home: React.FC = () => {
       <Prizes />
 
       {/* Sponsors Section - Scrolling Marquee */}
-      <section id="sponsors" className="py-32 border-t border-white/5 bg-black/40 backdrop-blur-sm overflow-hidden">
+      <section id="sponsors" className="py-32 border-t border-white/5 bg-[#f5f5f5] backdrop-blur-sm overflow-hidden">
         <div className="container mx-auto px-6 text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 30 }}
@@ -58,7 +59,7 @@ export const Home: React.FC = () => {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
             className="font-display font-bold text-3xl text-white/40 uppercase tracking-[0.2em]"
           >
-            Backed By Industry Leaders
+            Our Partners
           </motion.h2>
         </div>
         
@@ -86,7 +87,7 @@ export const Home: React.FC = () => {
                              <img 
                                 src={sponsor.logo} 
                                 alt={sponsor.name} 
-                                className="max-h-full max-w-full object-contain invert"
+                                className="max-h-full max-w-full object-contain"
                                 draggable={false}
                              />
                         </div>

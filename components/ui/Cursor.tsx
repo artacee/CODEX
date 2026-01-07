@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 
 export const Cursor: React.FC = () => {
     const mouse = {
@@ -7,25 +7,18 @@ export const Cursor: React.FC = () => {
         y: useMotionValue(-100)
     }
     
-    // Smooth spring physics for the cursor delay
-    const smoothOptions = { damping: 20, stiffness: 300, mass: 0.5 };
-    const smoothMouse = {
-        x: useSpring(mouse.x, smoothOptions),
-        y: useSpring(mouse.y, smoothOptions)
-    };
-
     const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         const manageMouseMove = (e: MouseEvent) => {
             const { clientX, clientY } = e;
-            mouse.x.set(clientX - 10); // Offset to center the 20px cursor
+            // Direct update without spring interpolation for instant response
+            mouse.x.set(clientX - 10); 
             mouse.y.set(clientY - 10);
         }
 
         const manageMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            // Check if the hovered element or its parents have the data-cursor attribute
             if(target.closest('[data-cursor="hover"]')){
                 setIsHovered(true);
             }
@@ -51,17 +44,23 @@ export const Cursor: React.FC = () => {
     return (
         <motion.div 
             style={{
-                left: smoothMouse.x, 
-                top: smoothMouse.y,
+                left: mouse.x, 
+                top: mouse.y,
             }} 
             animate={{
                 width: isHovered ? 60 : 20,
                 height: isHovered ? 60 : 20,
-                x: isHovered ? -20 : 0, // Adjust position when scaling up to keep centered
-                y: isHovered ? -20 : 0
+                x: isHovered ? -20 : 0,
+                y: isHovered ? -20 : 0,
+                opacity: isHovered ? 0.5 : 1
             }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed w-5 h-5 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference hidden md:block"
+            transition={{ 
+                // Keep spring only for the shape/size transition
+                type: "spring", 
+                stiffness: 300, 
+                damping: 25 
+            }}
+            className="fixed w-5 h-5 border-2 border-primary rounded-full pointer-events-none z-[9999] hidden md:block shadow-[0_0_20px_rgba(0,255,157,0.5)]"
         />
     )
 }

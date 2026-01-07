@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CODEX - 24hr Gen AI Hackathon</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,9 +40,13 @@
         overflow-x: hidden;
       }
       
+      html {
+        scroll-behavior: smooth;
+      }
+      
       /* Hide default cursor on desktop */
       @media (hover: hover) and (pointer: fine) {
-        body, a, button, input, [role="button"], label {
+        *, *::before, *::after {
           cursor: none !important;
         }
       }
@@ -119,7 +124,11 @@
         overscroll-behavior: contain;
       }
 
-      .lenis.lenis-stopped {
+      html.lenis-stopped {
+        overflow: hidden;
+      }
+      
+      html.lenis-stopped body {
         overflow: hidden;
       }
 
@@ -141,14 +150,14 @@
     "three": "https://esm.sh/three@0.162.0",
     "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.16.1?external=react,react-dom,three&deps=react@18.3.1,react-dom@18.3.1,three@0.162.0",
     "@react-three/drei": "https://esm.sh/@react-three/drei@9.105.4?external=react,react-dom,three,@react-three/fiber&deps=react@18.3.1,react-dom@18.3.1,three@0.162.0,@react-three/fiber@8.16.1",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

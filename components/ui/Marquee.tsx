@@ -13,7 +13,7 @@ export const Marquee: React.FC = () => {
       <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 hidden" />
 
       <motion.div
-        className="flex whitespace-nowrap font-display font-bold text-4xl text-black uppercase tracking-tighter will-change-transform"
+        className="flex whitespace-nowrap font-display font-bold text-4xl text-black !text-black uppercase tracking-tighter will-change-transform"
         animate={{ x: "-50%" }}
         transition={{ 
             repeat: Infinity, 

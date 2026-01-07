@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronDown, ChevronUp, AlertCircle, Lightbulb, Target, CheckCircle2 } from 'lucide-react';
 import { ProblemStatement, Track } from '../types';
@@ -13,6 +14,8 @@ interface ProblemStatementsModalProps {
 
 export const ProblemStatementsModal: React.FC<ProblemStatementsModalProps> = ({ isOpen, onClose, track }) => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const cardRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   // Filter statements based on the selected track ID
   const statements = track 
@@ -23,7 +26,44 @@ export const ProblemStatementsModal: React.FC<ProblemStatementsModalProps> = ({ 
     setExpandedId(expandedId === id ? null : id);
   };
 
-  return (
+  // Reset scroll position when modal opens
+  useEffect(() => {
+    if (isOpen && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
+
+  // Scroll to expanded card within the modal's scroll container
+  useEffect(() => {
+    if (expandedId && cardRefs.current[expandedId] && scrollContainerRef.current) {
+      setTimeout(() => {
+        const card = cardRefs.current[expandedId];
+        const container = scrollContainerRef.current;
+        
+        if (card && container) {
+          const cardTop = card.offsetTop;
+          const containerScrollTop = container.scrollTop;
+          const containerHeight = container.clientHeight;
+          const cardHeight = card.offsetHeight;
+          
+          // Check if card is already visible
+          const isVisible = 
+            cardTop >= containerScrollTop && 
+            cardTop + cardHeight <= containerScrollTop + containerHeight;
+          
+          if (!isVisible) {
+            // Scroll to position the card at the top with some padding
+            container.scrollTo({
+              top: cardTop - 20,
+              behavior: 'smooth'
+            });
+          }
+        }
+      }, 350); // Delay to allow expansion animation to start
+    }
+  }, [expandedId]);
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && track && (
         <motion.div
@@ -65,12 +105,13 @@ export const ProblemStatementsModal: React.FC<ProblemStatementsModalProps> = ({ 
             </div>
 
             {/* Content Scroll Area */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
+            <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
               <div className="grid gap-6">
                 {statements.length > 0 ? (
                   statements.map((ps, index) => (
                     <motion.div
                       key={ps.id}
+                      ref={(el) => { cardRefs.current[ps.id] = el; }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
@@ -186,6 +227,7 @@ export const ProblemStatementsModal: React.FC<ProblemStatementsModalProps> = ({ 
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };

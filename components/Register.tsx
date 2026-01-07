@@ -9,15 +9,9 @@ interface RegisterProps {
 }
 
 export const Register: React.FC<RegisterProps> = ({ onBack }) => {
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('submitting');
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('success');
-    }, 2000);
+  const handleGoogleFormClick = () => {
+    // Replace this URL with your actual Google Form URL
+    window.open('https://forms.gle/CaAX6U2F28cVdFUd7', '_blank');
   };
 
   return (
@@ -52,99 +46,26 @@ export const Register: React.FC<RegisterProps> = ({ onBack }) => {
           {/* Decorative background blob */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
 
-          {status === 'success' ? (
-             <motion.div 
-               initial={{ opacity: 0, scale: 0.9 }}
-               animate={{ opacity: 1, scale: 1 }}
-               className="text-center py-12"
-             >
-               <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                 <Check className="w-10 h-10" />
-               </div>
-               <h3 className="font-display text-3xl font-bold mb-4">Registration Confirmed!</h3>
-               <p className="text-muted mb-8">Check your email for the hacker guide and next steps.</p>
-               <Button onClick={onBack} variant="secondary">Return Home</Button>
-             </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-mono uppercase tracking-widest text-muted">First Name</label>
-                  <input 
-                    required 
-                    type="text" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
-                    placeholder="Jane"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-mono uppercase tracking-widest text-muted">Last Name</label>
-                  <input 
-                    required 
-                    type="text" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
-                    placeholder="Doe"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-muted">Email Address</label>
-                <input 
-                  required 
-                  type="email" 
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
-                  placeholder="jane@university.edu"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-mono uppercase tracking-widest text-muted">College / University</label>
-                <input 
-                  required 
-                  type="text" 
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
-                  placeholder="Institute of Technology..."
-                />
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                 <div className="space-y-2">
-                    <label className="text-xs font-mono uppercase tracking-widest text-muted">GitHub URL</label>
-                    <input 
-                      type="url" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
-                      placeholder="github.com/jane"
-                    />
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-xs font-mono uppercase tracking-widest text-muted">Discord Handle</label>
-                    <input 
-                      type="text" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
-                      placeholder="jane#1234"
-                    />
-                 </div>
-              </div>
-              
-              <div className="pt-4">
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  disabled={status === 'submitting'}
-                >
-                  {status === 'submitting' ? 'Processing...' : 'Complete Registration'}
-                </Button>
-              </div>
-              
-              <div className="flex items-start gap-3 mt-4 p-4 bg-secondary/10 rounded-lg border border-secondary/20">
-                <AlertCircle className="w-5 h-5 text-secondary flex-shrink-0" />
-                <p className="text-xs text-secondary/80 leading-relaxed">
-                  By registering, you agree to the Code of Conduct and allow us to share your information with event sponsors for recruiting purposes.
-                </p>
-              </div>
-            </form>
-          )}
+          <div className="text-center py-12 relative z-10">
+            <h3 className="font-display text-3xl font-bold mb-6">Complete Your Registration</h3>
+            <p className="text-muted mb-8 text-lg">
+              Click the button below to fill out our Google Form and secure your spot at CODEX 2026.
+            </p>
+            
+            <Button 
+              onClick={handleGoogleFormClick}
+              className="w-full max-w-md mx-auto"
+            >
+              Open Registration Form
+            </Button>
+            
+            <div className="flex items-start gap-3 mt-8 p-4 bg-secondary/10 rounded-lg border border-secondary/20 max-w-md mx-auto">
+              <AlertCircle className="w-5 h-5 text-secondary flex-shrink-0" />
+              <p className="text-xs text-secondary/80 leading-relaxed text-left">
+                By registering, you agree to the Code of Conduct and allow us to share your information with event sponsors for recruiting purposes.
+              </p>
+            </div>
+          </div>
         </div>
       </motion.div>
     </section>

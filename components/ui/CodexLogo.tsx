@@ -9,7 +9,8 @@ export const CodexLogo: React.FC<CodexLogoProps> = ({ className = "h-8" }) => {
     <img 
       src="/logo.png" 
       alt="CODEX Logo" 
-      className={`object-contain ${className}`}
+      className={className}
+      style={{ minWidth: '120px' }}
       draggable={false}
     />
   );

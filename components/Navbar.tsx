@@ -13,14 +13,34 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      
+      // Update scrolled state for styling
+      setIsScrolled(currentScrollY > 50);
+      
+      // Determine scroll direction and visibility
+      if (currentScrollY < 50) {
+        // Always show navbar at top of page
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down & past threshold - hide navbar
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - show navbar
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const handleNavClick = (href: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -51,18 +71,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     <>
       <motion.nav
         initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        animate={{ y: isVisible ? 0 : -100 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled ? 'py-4' : 'py-6'
         }`}
       >
         <div className="container mx-auto px-6">
-          <div className={`glass rounded-full px-6 py-3 flex items-center justify-between transition-all duration-500 ease-[0.22,1,0.36,1] ${isScrolled ? 'bg-black/80' : 'bg-black/40'}`}>
-            <a href="#" onClick={handleLogoClick} className="flex items-center gap-2" data-cursor="hover">
-              <CodexLogo className="h-8 md:h-10 w-auto" />
-            </a>
-
+          <div className={`glass rounded-full px-6 py-3 flex items-center justify-center transition-all duration-500 ease-[0.22,1,0.36,1] ${isScrolled ? 'bg-black/80' : 'bg-black/40'}`}>
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               {NAV_ITEMS.map((item) => (

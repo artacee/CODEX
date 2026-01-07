@@ -1,10 +1,14 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ChevronDown, MapPin, Calendar, MousePointer2 } from 'lucide-react';
+import { ArrowRight, ChevronDown, MapPin, Calendar } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Countdown } from './Countdown';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const { scrollY } = useScroll();
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -14,7 +18,6 @@ export const Hero: React.FC = () => {
   const yGrid = useTransform(scrollY, [0, 500], [0, 150]);
   const opacityGrid = useTransform(scrollY, [0, 500], [1, 0.5]);
   const yContent = useTransform(scrollY, [0, 500], [0, 50]);
-  const opacityContent = useTransform(scrollY, [0, 300], [1, 0]);
   
   // Rotation for the circular text based on scroll
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
@@ -47,30 +50,10 @@ export const Hero: React.FC = () => {
         style={{ y: yGrid, opacity: opacityGrid }}
         className="absolute -inset-[10%] bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_70%,transparent_100%)] z-0"
       />
-      
-      {/* Spinning Text Badge - Fixed position relative to Hero but rotates on scroll */}
-      <motion.div 
-        style={{ rotate }}
-        className="absolute bottom-20 right-[10%] w-32 h-32 md:w-40 md:h-40 hidden lg:flex items-center justify-center z-20 pointer-events-none opacity-50"
-      >
-        <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
-            <defs>
-                <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
-            </defs>
-            <text className="font-mono text-[10px] font-bold fill-white uppercase tracking-[0.15em]">
-                <textPath href="#circlePath">
-                    • Scroll to Explore • Codex 2026 
-                </textPath>
-            </text>
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-            <ArrowRight className="w-6 h-6 text-primary rotate-90" />
-        </div>
-      </motion.div>
 
-      {/* Main Content with subtle parallax fade */}
+      {/* Main Content with subtle parallax */}
       <motion.div 
-        style={{ y: yContent, opacity: opacityContent }}
+        style={{ y: yContent }}
         className="container mx-auto px-6 relative z-10 text-center"
       >
         {/* Presented By */}
@@ -90,26 +73,19 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Main Title - CODEX Constructed Logo */}
+        {/* Main Title - CODEX Logo */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.1, ease: cinemticEase }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: cinemticEase }}
           className="flex items-center justify-center mb-6"
         >
-          <div className="font-display font-bold text-7xl md:text-9xl lg:text-[12rem] tracking-tighter leading-none flex items-center select-none group">
-            <span className="text-primary transition-transform duration-300 group-hover:-translate-x-4">C</span>
-            <div className="relative mx-[0.05em] flex items-center justify-center">
-              <span className="text-primary group-hover:scale-110 transition-transform duration-300">O</span>
-              <MousePointer2 
-                className="absolute top-[25%] left-[25%] w-[60%] h-[60%] text-white fill-white stroke-none drop-shadow-xl transform -rotate-12 group-hover:rotate-12 transition-transform duration-300" 
-                strokeWidth={0}
-              />
-            </div>
-            <span className="text-primary transition-transform duration-300 group-hover:translate-x-1">D</span>
-            <span className="text-primary transition-transform duration-300 group-hover:translate-x-4">E</span>
-            <span className="text-secondary transition-transform duration-300 group-hover:translate-x-8 group-hover:rotate-12">X</span>
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="CODEX Logo" 
+            loading="eager"
+            className="w-auto h-32 md:h-48 lg:h-64 object-contain will-change-transform"
+          />
         </motion.div>
 
         {/* Subtitle */}
@@ -173,11 +149,12 @@ export const Hero: React.FC = () => {
           transition={{ duration: 1, delay: 0.6, ease: cinemticEase }}
           className="flex flex-col md:flex-row items-center justify-center gap-6"
         >
-          <Button icon={<ArrowRight className="w-4 h-4" />} className="w-full md:w-auto h-14 text-base">
+          <Button 
+            icon={<ArrowRight className="w-4 h-4" />} 
+            className="w-full md:w-auto h-14 text-base"
+            onClick={() => onNavigate?.('register')}
+          >
             Register Now
-          </Button>
-          <Button variant="outline" className="w-full md:w-auto h-14 text-base">
-            Download Brochure
           </Button>
         </motion.div>
       </motion.div>
