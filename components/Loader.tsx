@@ -46,6 +46,13 @@ export const Loader: React.FC<LoaderProps> = ({ onLoadingComplete }) => {
         } 
       }}
     >
+        {/* Background Image Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+          style={{ backgroundImage: 'url(/loader.png)' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60" />
+
         <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-md px-6">
             <div className="flex items-start mb-8 relative">
                 <span className="font-display font-bold text-7xl md:text-9xl tracking-tighter leading-none">

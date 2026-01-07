@@ -8,7 +8,14 @@ export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-32 relative bg-surface scroll-mt-32">
+    <section id="faq" className="py-32 relative bg-surface scroll-mt-32 overflow-hidden">
+      {/* Background Image Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 pointer-events-none"
+        style={{ backgroundImage: 'url(/favicon.png)' }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-surface via-surface/90 to-surface pointer-events-none" />
+      
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-start">
           {/* Sticky Container - Separated from Motion for stability */}

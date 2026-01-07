@@ -10,6 +10,13 @@ export const Tracks: React.FC = () => {
 
   return (
     <section id="tracks" className="py-32 bg-background relative overflow-hidden">
+      {/* Background Image Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100 pointer-events-none"
+        style={{ backgroundImage: 'url(/loader.png)' }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background pointer-events-none" />
+      
       {/* Abstract overlapping shapes */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-surface/50 -skew-x-12 translate-x-1/3 pointer-events-none" />
       

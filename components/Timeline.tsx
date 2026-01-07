@@ -37,6 +37,13 @@ const SCHEDULE = [
 export const Timeline: React.FC = () => {
   return (
     <section id="schedule" className="py-32 bg-surface relative overflow-hidden border-y border-white/5">
+        {/* Background Image Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50 pointer-events-none"
+          style={{ backgroundImage: 'url(/favicon.png)' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-surface via-surface/90 to-surface pointer-events-none" />
+        
         {/* Background Grids */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black_70%,transparent_100%)] pointer-events-none" />
 
