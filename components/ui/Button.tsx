@@ -29,7 +29,8 @@ export const Button: React.FC<ButtonProps> = ({
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className={`${baseStyles} ${variants[variant]} ${className}`}
-        data-cursor="hover"
+        data-cursor="text"
+        data-cursor-text="Click"
         {...props}
       >
         <span className="relative z-10 flex items-center gap-2">

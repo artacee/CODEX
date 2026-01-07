@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown, MapPin, Calendar } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Countdown } from './Countdown';
 import { Typewriter } from './ui/Typewriter';
+import { StaggeredText } from './ui/StaggeredText';
 
 interface HeroProps {
   onNavigate?: (page: string) => void;
@@ -91,18 +92,24 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
         {/* Subtitle */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: cinemticEase }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: cinemticEase }}
           className="mb-10"
         >
           <div className="text-xl md:text-4xl font-bold uppercase tracking-widest text-white mb-4">
-            24 Hour <span className="text-primary">Gen AI</span> Hackathon
+            <StaggeredText 
+              delay={0.5} 
+              highlightWords={['Gen', 'AI']} 
+              highlightClassName="text-primary"
+            >
+              24 Hour Gen AI Hackathon
+            </StaggeredText>
           </div>
           <p className="text-muted text-lg md:text-xl font-light tracking-wide">
             <Typewriter 
               text='"Where Innovation Meets Execution"' 
-              delay={1500} 
+              delay={2500} 
               speed={40}
             />
           </p>
@@ -128,7 +135,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             href={googleCalendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            data-cursor="hover"
+            data-cursor="text"
+            data-cursor-text="Add"
             className="group flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-primary/50 transition-all cursor-pointer"
           >
             <Calendar className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
@@ -139,7 +147,8 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             href={mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            data-cursor="hover"
+            data-cursor="text"
+            data-cursor-text="View"
             className="group flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:border-secondary/50 transition-all cursor-pointer"
           >
             <MapPin className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform" />

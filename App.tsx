@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar';
 import { Home } from './components/Home';
 import { Register } from './components/Register';
@@ -7,10 +7,38 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Loader } from './components/Loader';
 import { Cursor } from './components/ui/Cursor';
 import { Scene3D } from './components/Scene3D';
+import Lenis from 'lenis';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
+  const lenisRef = useRef<Lenis | null>(null);
+
+  // Initialize Lenis smooth scroll
+  useEffect(() => {
+    if (isLoading) return;
+    
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+    });
+    
+    lenisRef.current = lenis;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, [isLoading]);
 
   // Prevent scrolling while loading
   useEffect(() => {
@@ -24,8 +52,12 @@ const App: React.FC = () => {
   const handleNavigate = (page: string) => {
     if (page === currentPage) return;
     
-    // Smooth scroll to top before transition
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Smooth scroll to top using Lenis if available, otherwise fallback
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: false });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     
     // Slight delay to allow scroll to start
     setTimeout(() => {
@@ -36,7 +68,11 @@ const App: React.FC = () => {
   // Reset scroll on page change
   useEffect(() => {
     if(!isLoading) {
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        if (lenisRef.current) {
+          lenisRef.current.scrollTo(0, { immediate: true });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }
     }
   }, [currentPage, isLoading]);
 
@@ -83,7 +119,7 @@ const App: React.FC = () => {
               </motion.div>
             </AnimatePresence>
             
-            <Footer />
+            <Footer onNavigate={handleNavigate} />
           </div>
         </>
       )}

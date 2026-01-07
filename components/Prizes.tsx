@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { PRIZES } from '../constants';
 import { Trophy } from 'lucide-react';
 import { KineticText } from './ui/KineticText';
+import { CurrencyCounter } from './ui/Counter';
 
 const container = {
   hidden: { opacity: 0 },
@@ -111,7 +112,13 @@ export const Prizes: React.FC = () => {
                         </motion.div>
                         
                         <h3 className="font-display font-bold text-2xl uppercase tracking-wider mb-2">{prize.place}</h3>
-                        <div className={`text-4xl md:text-5xl font-bold mb-10 ${isFirst ? 'text-white' : 'text-white/80'}`}>{prize.amount}</div>
+                        <div className={`text-4xl md:text-5xl font-bold mb-10 ${isFirst ? 'text-white' : 'text-white/80'}`}>
+                            <CurrencyCounter 
+                                value={parseInt(prize.amount.replace(/[^0-9]/g, ''))} 
+                                delay={isFirst ? 0.2 : isSecond ? 0.4 : 0.6}
+                                duration={2.5}
+                            />
+                        </div>
                         
                         <ul className="space-y-4 w-full">
                             {prize.perks.map((perk, i) => (
