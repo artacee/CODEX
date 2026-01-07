@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown, MapPin, Calendar } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Countdown } from './Countdown';
+import { Typewriter } from './ui/Typewriter';
 
 interface HeroProps {
   onNavigate?: (page: string) => void;
@@ -98,8 +99,12 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           <div className="text-xl md:text-4xl font-bold uppercase tracking-widest text-white mb-4">
             24 Hour <span className="text-primary">Gen AI</span> Hackathon
           </div>
-          <p className="text-muted text-lg md:text-xl font-light italic tracking-wide">
-            "Where Innovation Meets Execution"
+          <p className="text-muted text-lg md:text-xl font-light tracking-wide">
+            <Typewriter 
+              text='"Where Innovation Meets Execution"' 
+              delay={1500} 
+              speed={40}
+            />
           </p>
         </motion.div>
 
