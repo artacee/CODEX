@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Button } from './ui/Button';
+import { toast } from './ui/Toaster';
 import { SPONSORS } from '../constants';
 import { TextScramble } from './ui/TextScramble';
 
@@ -11,7 +13,7 @@ const MarqueeRow: React.FC<{
   className?: string;
 }> = ({ sponsors, direction = 'left', speed = 30, className = '' }) => {
   const items = [...sponsors, ...sponsors, ...sponsors, ...sponsors];
-  
+
   return (
     <div className={`relative flex overflow-hidden ${className}`}>
       <motion.div
@@ -32,7 +34,7 @@ const MarqueeRow: React.FC<{
           >
             {/* Glow effect on hover */}
             <div className="absolute inset-0 bg-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150" />
-            
+
             <div className="relative px-8 py-6 bg-white/[0.03] border border-white/5 rounded-2xl 
                           hover:bg-white/[0.08] hover:border-primary/20 
                           transition-all duration-500 transform hover:scale-105">
@@ -58,7 +60,7 @@ const MarqueeRow: React.FC<{
 const AnimatedHeading: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  
+
   return (
     <motion.div
       ref={ref}
@@ -190,45 +192,6 @@ export const Sponsors: React.FC = () => {
         {/* Row 2 - Different speed, right direction for visual interest */}
         <MarqueeRow sponsors={row2} direction="right" speed={40} />
       </div>
-
-      {/* Bottom CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="container mx-auto px-6 mt-20 md:mt-32 text-center"
-      >
-        <p className="text-muted text-sm md:text-base mb-6">
-          Want to partner with us?
-        </p>
-        <button
-          type="button"
-          aria-label="Email collab at codextki.dev to become a sponsor"
-          onClick={() => {
-            window.open('mailto:collab@codextki.dev');
-          }}
-          className="inline-flex items-center gap-2 text-white font-medium 
-                   px-6 py-3 border border-white/20 rounded-full
-                   hover:bg-white hover:text-background transition-all duration-300"
-          data-cursor="hover"
-        >
-          <span>Become a Sponsor</span>
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </button>
-      </motion.div>
     </section>
   );
 };

@@ -8,15 +8,15 @@ interface ButtonProps extends Omit<HTMLMotionProps<"button">, 'children'> {
   children: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({ 
-  children, 
-  variant = 'primary', 
-  className = '', 
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'primary',
+  className = '',
   icon,
-  ...props 
+  ...props
 }) => {
   const baseStyles = "relative inline-flex items-center justify-center gap-2 px-8 py-4 font-display font-bold text-sm tracking-wider uppercase transition-all duration-300 overflow-hidden group";
-  
+
   const variants = {
     primary: "bg-primary text-black hover:bg-white !text-black",
     secondary: "bg-surface border border-white/10 text-white hover:border-primary hover:text-primary",

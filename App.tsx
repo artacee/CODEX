@@ -17,14 +17,14 @@ const App: React.FC = () => {
   // Initialize Lenis smooth scroll
   useEffect(() => {
     if (isLoading) return;
-    
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
     });
-    
+
     lenisRef.current = lenis;
 
     function raf(time: number) {
@@ -51,28 +51,28 @@ const App: React.FC = () => {
 
   const handleNavigate = (page: string) => {
     if (page === currentPage) return;
-    
+
     // Smooth scroll to top using Lenis if available, otherwise fallback
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: false });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     // Slight delay to allow scroll to start
     setTimeout(() => {
-       setCurrentPage(page);
+      setCurrentPage(page);
     }, 100);
   };
 
   // Reset scroll on page change
   useEffect(() => {
-    if(!isLoading) {
-        if (lenisRef.current) {
-          lenisRef.current.scrollTo(0, { immediate: true });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'instant' });
-        }
+    if (!isLoading) {
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { immediate: true });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
     }
   }, [currentPage, isLoading]);
 
@@ -80,21 +80,21 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-background text-text selection:bg-primary selection:text-black relative">
       <div className="film-grain"></div>
       <Cursor />
-      
+
       <AnimatePresence>
         {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
       </AnimatePresence>
-      
+
       {!isLoading && (
         <>
           {/* 3D Scene Background - Persistent across pages */}
           <motion.div
-             initial={{ opacity: 0 }}
-             animate={{ opacity: 1 }}
-             transition={{ duration: 2 }}
-             className="fixed inset-0 z-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }}
+            className="fixed inset-0 z-0 pointer-events-none"
           >
-             <Scene3D />
+            <Scene3D />
           </motion.div>
 
           {/* Navigation - Persistent */}
@@ -118,7 +118,7 @@ const App: React.FC = () => {
                 )}
               </motion.div>
             </AnimatePresence>
-            
+
             <Footer onNavigate={handleNavigate} />
           </div>
         </>
