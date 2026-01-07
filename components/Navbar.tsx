@@ -77,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           isScrolled ? 'py-4' : 'py-6'
         }`}
       >
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 flex justify-center">
           <div className={`glass rounded-full px-6 py-3 flex items-center justify-center transition-all duration-500 ease-[0.22,1,0.36,1] ${isScrolled ? 'bg-black/80' : 'bg-black/40'}`}>
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
