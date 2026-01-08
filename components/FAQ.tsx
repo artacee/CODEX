@@ -24,45 +24,45 @@ export const FAQ: React.FC = () => {
       console.error('Failed to copy:', err);
     }
   };
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
-  
+
   // Parallax for decorative elements
   const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [-50, 50]);
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id="faq" 
+      id="faq"
       className="py-32 relative bg-surface scroll-mt-32 overflow-hidden"
     >
       {/* Animated Background Elements */}
-      <motion.div 
+      <motion.div
         style={{ y: y1, rotate }}
         className="absolute top-20 -right-20 w-64 h-64 border border-primary/10 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         style={{ y: y2 }}
         className="absolute bottom-40 -left-20 w-40 h-40 border border-secondary/10 rounded-full pointer-events-none"
       />
-      
+
       {/* Large Background Number */}
-      <motion.div 
+      <motion.div
         style={{ y: y1 }}
         className="absolute top-1/2 -translate-y-1/2 -right-20 text-[30vw] font-display font-bold text-white/[0.02] leading-none pointer-events-none select-none"
       >
         ?
       </motion.div>
-      
+
       {/* Gradient Overlays */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-surface via-transparent to-surface pointer-events-none" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         {/* Header Section - Full Width */}
         <motion.div
@@ -85,7 +85,7 @@ export const FAQ: React.FC = () => {
                 </span>
               </h2>
             </div>
-            
+
             {/* Stats Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -112,9 +112,9 @@ export const FAQ: React.FC = () => {
           {FAQS.map((faq, index) => {
             const isOpen = openIndex === index;
             const isHovered = hoveredIndex === index;
-            
+
             return (
-              <motion.div 
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -124,8 +124,8 @@ export const FAQ: React.FC = () => {
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={`
                   group relative rounded-3xl transition-all duration-500 ease-[0.22,1,0.36,1]
-                  ${isOpen 
-                    ? 'bg-gradient-to-br from-primary/10 to-secondary/5 border-primary/30' 
+                  ${isOpen
+                    ? 'bg-gradient-to-br from-primary/10 to-secondary/5 border-primary/30'
                     : 'bg-white/[0.02] hover:bg-white/[0.05]'
                   }
                   border border-white/10 hover:border-white/20
@@ -134,16 +134,16 @@ export const FAQ: React.FC = () => {
                 data-cursor="hover"
               >
                 {/* Hover Gradient Effect */}
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 />
-                
+
                 {/* Index Number */}
                 <div className="absolute top-6 right-6 font-display font-bold text-6xl text-white/[0.03] group-hover:text-white/[0.08] transition-colors duration-500">
                   {String(index + 1).padStart(2, '0')}
                 </div>
-                
-                <button 
+
+                <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full text-left p-8 relative z-10"
                 >
@@ -161,7 +161,7 @@ export const FAQ: React.FC = () => {
                           Question
                         </span>
                       </div>
-                      
+
                       <h3 className={`
                         font-display font-bold text-xl md:text-2xl leading-tight transition-colors duration-300
                         ${isOpen ? 'text-primary' : 'text-white group-hover:text-white'}
@@ -169,18 +169,18 @@ export const FAQ: React.FC = () => {
                         {faq.question}
                       </h3>
                     </div>
-                    
+
                     {/* Toggle Button */}
                     <motion.div
-                      animate={{ 
+                      animate={{
                         rotate: isOpen ? 45 : 0,
                         scale: isHovered ? 1.1 : 1
                       }}
                       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                       className={`
                         w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300
-                        ${isOpen 
-                          ? 'bg-primary text-black' 
+                        ${isOpen
+                          ? 'bg-primary text-black'
                           : 'bg-white/10 text-white group-hover:bg-white/20'
                         }
                       `}
@@ -213,74 +213,153 @@ export const FAQ: React.FC = () => {
           })}
         </div>
 
-        {/* Contact CTA Card */}
+        {/* Contact CTA Card - Premium Design */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="mt-16"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-20"
         >
-          <div className="relative rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 p-8 md:p-12 overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-            
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                  <MessageCircle className="w-8 h-8 text-primary" />
+          <div className="relative group">
+            {/* Animated gradient background blur */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 via-secondary/20 to-primary/30 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-60 transition-all duration-700" />
+
+            {/* Main card */}
+            <div className="relative rounded-[2rem] bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-transparent border border-white/[0.12] backdrop-blur-xl p-10 md:p-16 overflow-hidden">
+              {/* Animated gradient orbs */}
+              <motion.div
+                animate={{
+                  x: [0, 30, 0],
+                  y: [0, -20, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none"
+              />
+              <motion.div
+                animate={{
+                  x: [0, -20, 0],
+                  y: [0, 30, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-20 -left-20 w-48 h-48 bg-secondary/20 rounded-full blur-3xl pointer-events-none"
+              />
+
+              {/* Subtle grid pattern */}
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-50" />
+
+              {/* Content */}
+              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+                {/* Left side - Icon and text */}
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
+                  {/* Animated icon container */}
+                  <motion.div
+                    whileHover={{ scale: 1.05, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="relative"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-2xl blur-xl opacity-40" />
+                    <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/10 border border-white/10 flex items-center justify-center backdrop-blur-sm">
+                      <MessageCircle className="w-10 h-10 text-primary" />
+                    </div>
+                  </motion.div>
+
+                  {/* Text content */}
+                  <div className="max-w-md">
+                    <motion.span
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 }}
+                      className="text-primary/80 font-mono text-xs tracking-[0.25em] uppercase mb-3 block"
+                    >
+                      Get In Touch
+                    </motion.span>
+                    <motion.h4
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
+                      className="font-display font-bold text-3xl md:text-4xl text-white mb-3 tracking-tight"
+                    >
+                      Still have{' '}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-secondary">
+                        Questions?
+                      </span>
+                    </motion.h4>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4 }}
+                      className="text-muted text-lg leading-relaxed"
+                    >
+                      Can't find what you're looking for? We're here to help you out.
+                    </motion.p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-display font-bold text-2xl text-white mb-2">
-                    Still have questions?
-                  </h4>
-                  <p className="text-muted">
-                    Can't find what you're looking for? We're here to help.
-                  </p>
-                </div>
+
+                {/* Right side - Premium button */}
+                <Magnetic>
+                  <motion.button
+                    onClick={handleCopyEmail}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    data-cursor="text"
+                    data-cursor-text={copied ? "Copied!" : "Mail"}
+                    className={`relative group/btn overflow-hidden px-10 py-5 rounded-full transition-all duration-500 ${copied
+                        ? 'bg-gradient-to-r from-primary to-primary/90'
+                        : 'bg-white/[0.03] hover:bg-white/[0.08]'
+                      }`}
+                  >
+                    {/* Button glow effect */}
+                    <div className={`absolute inset-0 rounded-full transition-opacity duration-500 ${copied ? 'opacity-100' : 'opacity-0 group-hover/btn:opacity-100'
+                      }`}>
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/40 to-secondary/40 blur-xl" />
+                    </div>
+
+                    {/* Button border */}
+                    <div className={`absolute inset-0 rounded-full border transition-all duration-500 ${copied
+                        ? 'border-primary/50'
+                        : 'border-white/10 group-hover/btn:border-primary/30'
+                      }`} />
+
+                    {/* Button content */}
+                    <span className="relative z-10 flex items-center gap-4">
+                      <span className={`font-bold text-sm uppercase tracking-[0.2em] transition-colors duration-300 ${copied ? 'text-black' : 'text-white group-hover/btn:text-primary'
+                        }`}>
+                        {copied ? 'Copied!' : 'Mail Us'}
+                      </span>
+                      <AnimatePresence mode="wait">
+                        {copied ? (
+                          <motion.div
+                            key="check"
+                            initial={{ scale: 0, rotate: -180 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            exit={{ scale: 0, rotate: 180 }}
+                            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                          >
+                            <Check className="w-5 h-5 text-black" />
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key="copy"
+                            initial={{ scale: 0, x: -10 }}
+                            animate={{ scale: 1, x: 0 }}
+                            exit={{ scale: 0, x: 10 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative"
+                          >
+                            <Copy className="w-5 h-5 text-white/70 group-hover/btn:text-primary transition-colors duration-300" />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </span>
+                  </motion.button>
+                </Magnetic>
               </div>
-              
-              <Magnetic>
-                <button
-                  onClick={handleCopyEmail}
-                  data-cursor="text"
-                  data-cursor-text={copied ? "Copied!" : "Copy"}
-                  className={`group inline-flex items-center gap-4 px-8 py-4 rounded-full border transition-all duration-500 ${
-                    copied 
-                      ? 'bg-primary border-primary' 
-                      : 'border-white/20 bg-white/5 hover:bg-primary hover:border-primary'
-                  }`}
-                >
-                  <span className={`font-bold uppercase tracking-wider transition-colors ${
-                    copied ? 'text-black' : 'group-hover:text-black'
-                  }`}>
-                    {copied ? 'Copied!' : 'Copy Email'}
-                  </span>
-                  <AnimatePresence mode="wait">
-                    {copied ? (
-                      <motion.div
-                        key="check"
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        exit={{ scale: 0, rotate: 180 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Check className="w-5 h-5 text-black" />
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="copy"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Copy className="w-5 h-5 group-hover:text-black transition-colors" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </button>
-              </Magnetic>
             </div>
           </div>
         </motion.div>

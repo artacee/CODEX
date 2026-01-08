@@ -28,14 +28,6 @@ export const TRACKS: Track[] = [
     tags: ['FinTech', 'EdTech', 'Govt Tech']
   },
   {
-    id: 'life',
-    title: 'Life & Sustainability',
-    description: 'Focus on biological sciences, physical survival, and the environment.',
-    icon: HeartPulse,
-    color: 'bg-green-500',
-    tags: ['HealthTech', 'AgriTech']
-  },
-  {
     id: 'open',
     title: 'Open Innovation',
     description: 'The wildcard track for everything else.',
@@ -96,46 +88,46 @@ export const SPONSORS: Sponsor[] = Object.keys(import.meta.glob('./public/partne
 });
 
 export const PROBLEM_STATEMENTS: ProblemStatement[] = [
-    {
-        "id": "ps-003",
-        "title": "Fake social media accounts and their detection",
-        "category": "Software",
-        "theme": "Cybersecurity, Digital Forensics & Law Enforcement Tech",
-        "trackId": "digital",
-        "sections": {
-            "background": "Fake social media accounts pose security risks, including misinformation and malicious communication targeting organizations such as ITBP.",
-            "description": "The problem involves identifying fake profiles on platforms like Facebook, Instagram, and Twitter and reporting them for suspension or deletion.",
-            "challenge": null,
-            "ask": null,
-            "expected_solution": "Develop tools to identify fake accounts and establish a central agency to coordinate with social media platforms for time-bound suspension or deletion."
-        }
-    },
-    {
-        "id": "ps-006",
-        "title": "AI-Powered Rapid Damage Assessment",
-        "category": null,
-        "theme": "Disaster Management & Emergency Response",
-        "trackId": "open",
-        "sections": {
-            "background": null,
-            "description": null,
-            "challenge": "After floods, infrastructure damage assessment takes weeks.",
-            "ask": "Build a tool using drone or satellite imagery to automatically quantify damage for faster fund release.",
-            "expected_solution": null
-        }
-    },
-    {
-        "id": "ps-013",
-        "title": "Enhancing Navigation for Railway Station Facilities and Locations",
-        "category": "Software",
-        "theme": "Transportation, Logistics & Smart Cities",
-        "trackId": "smart",
-        "sections": {
-            "background": "RTN trucks operate on fixed routes with varying capacity utilization and delays.",
-            "description": "Real-time tracking, GIS integration, and schedule management are required for efficient parcel movement.",
-            "challenge": null,
-            "ask": null,
-            "expected_solution": "A GPS and GIS-based system enabling live tracking, alerts, capacity optimization, and automated MIS reporting."
-        }
+  {
+    "id": "ps-003",
+    "title": "Fake social media accounts and their detection",
+    "category": "Software",
+    "theme": "Cybersecurity, Digital Forensics & Law Enforcement Tech",
+    "trackId": "digital",
+    "sections": {
+      "background": "Fake social media accounts pose security risks, including misinformation and malicious communication targeting organizations such as ITBP.",
+      "description": "The problem involves identifying fake profiles on platforms like Facebook, Instagram, and Twitter and reporting them for suspension or deletion.",
+      "challenge": null,
+      "ask": null,
+      "expected_solution": "Develop tools to identify fake accounts and establish a central agency to coordinate with social media platforms for time-bound suspension or deletion."
     }
+  },
+  {
+    "id": "ps-006",
+    "title": "AI-Powered Rapid Damage Assessment",
+    "category": null,
+    "theme": "Disaster Management & Emergency Response",
+    "trackId": "open",
+    "sections": {
+      "background": null,
+      "description": null,
+      "challenge": "After floods, infrastructure damage assessment takes weeks.",
+      "ask": "Build a tool using drone or satellite imagery to automatically quantify damage for faster fund release.",
+      "expected_solution": null
+    }
+  },
+  {
+    "id": "ps-013",
+    "title": "Enhancing Navigation for Railway Station Facilities and Locations",
+    "category": "Software",
+    "theme": "Transportation, Logistics & Smart Cities",
+    "trackId": "smart",
+    "sections": {
+      "background": "RTN trucks operate on fixed routes with varying capacity utilization and delays.",
+      "description": "Real-time tracking, GIS integration, and schedule management are required for efficient parcel movement.",
+      "challenge": null,
+      "ask": null,
+      "expected_solution": "A GPS and GIS-based system enabling live tracking, alerts, capacity optimization, and automated MIS reporting."
+    }
+  }
 ];
