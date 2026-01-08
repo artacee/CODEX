@@ -367,7 +367,7 @@ export const About: React.FC = () => {
                   </h3>
 
                   <p className="text-muted text-lg leading-relaxed mb-8">
-                    A high-intensity hackathon where teams ideate, design, and build practical solutions to real-world problems. <span className="text-white font-semibold"><Counter value={100} suffix="+" duration={1.5} /></span> teams compete across <span className="text-white font-semibold"><Counter value={5} duration={1} /></span> specialized tracks.
+                    A high-intensity hackathon where teams ideate, design, and build practical solutions to real-world problems. <span className="text-white font-semibold"><Counter value={100} suffix="+" duration={1.5} /></span> teams compete across <span className="text-white font-semibold"><Counter value={3} duration={1} /></span> specialized tracks.
                   </p>
 
                   {/* Stats grid */}
@@ -380,15 +380,9 @@ export const About: React.FC = () => {
                     </div>
                     <div>
                       <span className="block text-2xl md:text-3xl font-display font-bold text-white">
-                        <Counter value={5} duration={1} />
+                        <Counter value={3} duration={1} />
                       </span>
                       <span className="text-xs text-muted uppercase tracking-wider">Tracks</span>
-                    </div>
-                    <div>
-                      <span className="block text-2xl md:text-3xl font-display font-bold text-white">
-                        <Counter value={20} suffix="+" duration={1.5} />
-                      </span>
-                      <span className="text-xs text-muted uppercase tracking-wider">Mentors</span>
                     </div>
                   </div>
                 </div>
