@@ -6,9 +6,10 @@ import { Magnetic } from './ui/Magnetic';
 interface NavbarProps {
   currentPage: string;
   onNavigate: (page: string) => void;
+  onLogoClick?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
+export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onLogoClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -90,7 +91,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
             {/* Logo area - simple text for now or could be the Logo component if integrated */}
             {/* Logo area */}
             <button
-              onClick={() => currentPage === 'home' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : onNavigate('home')}
+              onClick={() => {
+                if (onLogoClick) onLogoClick();
+                currentPage === 'home' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : onNavigate('home');
+              }}
               className="z-50 relative hover:opacity-80 transition-opacity"
               data-cursor="hover"
             >

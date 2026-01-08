@@ -7,12 +7,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Loader } from './components/Loader';
 import { Cursor } from './components/ui/Cursor';
 import { Scene3D } from './components/Scene3D';
+import { HackerMode } from './components/HackerMode';
+import { GravityPlayground } from './components/game/GravityPlayground';
+import { CreditsMode } from './components/CreditsMode';
+import { useGravityTrigger } from './hooks/useGravityTrigger';
+import { useWordTrigger } from './hooks/useWordTrigger';
 import Lenis from 'lenis';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('home');
   const lenisRef = useRef<Lenis | null>(null);
+
+  const { isActive: isGravityActive, setIsActive: setIsGravityActive, trigger: triggerGravity } = useGravityTrigger();
+  const { triggered: isCreditsTriggered, setTriggered: setCreditsTriggered } = useWordTrigger('CREDITS.');
 
   // Initialize Lenis smooth scroll
   useEffect(() => {
@@ -80,6 +88,7 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-background text-text selection:bg-primary selection:text-black relative">
       <div className="film-grain"></div>
       <Cursor />
+      <HackerMode />
 
       <AnimatePresence>
         {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
@@ -97,8 +106,18 @@ const App: React.FC = () => {
             <Scene3D />
           </motion.div>
 
+          {/* Gravity Mode */}
+          <AnimatePresence>
+            {isGravityActive && <GravityPlayground onClose={() => setIsGravityActive(false)} />}
+          </AnimatePresence>
+
+          {/* Credits Mode */}
+          <AnimatePresence>
+            {isCreditsTriggered && <CreditsMode onClose={() => setCreditsTriggered(false)} />}
+          </AnimatePresence>
+
           {/* Navigation - Persistent */}
-          <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+          <Navbar currentPage={currentPage} onNavigate={handleNavigate} onLogoClick={triggerGravity} />
 
           {/* Main Content Area with Page Transitions */}
           <div className="relative z-10 min-h-screen flex flex-col justify-between">
