@@ -1,3 +1,4 @@
+import { FloatingIcons } from './ui/FloatingIcons';
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Plus, ArrowUpRight, MessageCircle, HelpCircle, Copy, Check } from 'lucide-react';
@@ -60,6 +61,7 @@ export const FAQ: React.FC = () => {
       id="faq"
       className="py-32 relative bg-surface scroll-mt-32 overflow-hidden"
     >
+      <FloatingIcons />
       {/* Animated Background Elements */}
       <motion.div
         style={{ y: y1, rotate }}

@@ -1,3 +1,4 @@
+import { FloatingIcons } from './ui/FloatingIcons';
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { KineticText } from './ui/KineticText';
@@ -65,8 +66,9 @@ export const About: React.FC = () => {
     <section
       ref={containerRef}
       id="about"
-      className="relative bg-surface overflow-hidden"
+      className="py-32 md:py-48 bg-background relative overflow-hidden"
     >
+      <FloatingIcons count={8} />
       {/* Floating grid pattern */}
       <div className="absolute inset-0 opacity-[0.02]">
         <div
@@ -97,6 +99,7 @@ export const About: React.FC = () => {
 
       {/* Hero section with large typography */}
       <div className="relative pt-32 pb-20 md:pt-48 md:pb-32">
+        <FloatingIcons count={10} images={['/favicon1.png', '/asset.png']} />
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             {/* Left column - Section label */}
@@ -223,7 +226,8 @@ export const About: React.FC = () => {
       </div>
 
       {/* Bottom content - Bento-style cards */}
-      <div className="py-20 md:py-32">
+      <div className="py-20 md:py-32 relative">
+        <FloatingIcons count={10} images={['/favicon1.png', '/asset.png']} />
         <div className="container mx-auto px-6">
           <div className="flex flex-col gap-6 md:gap-8">
             {/* Card 0 - The Institute */}
@@ -247,14 +251,14 @@ export const About: React.FC = () => {
                 </span>
 
                 <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
-                  T.K.M. Institute of <span className="text-white/40">Technology</span>
+                  T.K.M Institute of <span className="text-white/40">Technology</span>
                 </h3>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                   <div>
                     <p className="text-muted text-lg leading-relaxed mb-6">
                       <RevealText delay={0.3}>
-                        Established by the T.K.M. College Trust, the institute is set on a picturesque 25-acre green campus known as Musaliar Hills at Karuvelil, Kollam.
+                        Established by the T.K.M College Trust, the institute is set on a picturesque 25-acre green campus known as Musaliar Hills at Karuvelil, Kollam.
                       </RevealText>
                     </p>
                     <p className="text-muted text-lg leading-relaxed">

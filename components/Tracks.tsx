@@ -1,3 +1,4 @@
+import { PatternMarquee } from './ui/PatternMarquee';
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
@@ -34,6 +35,8 @@ export const Tracks: React.FC = () => {
       id="tracks"
       className="py-32 md:py-48 bg-background relative overflow-hidden"
     >
+
+
       {/* Background Image Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100 pointer-events-none"
@@ -69,6 +72,14 @@ export const Tracks: React.FC = () => {
       >
         03
       </motion.div>
+
+      {/* Marquees - Prominent z-index */}
+      <div className="absolute top-0 left-0 w-full z-[1] opacity-60 pointer-events-none">
+        <PatternMarquee direction="left" />
+      </div>
+      <div className="absolute bottom-0 left-0 w-full z-[1] opacity-60 pointer-events-none">
+        <PatternMarquee direction="left" />
+      </div>
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Header Section */}
