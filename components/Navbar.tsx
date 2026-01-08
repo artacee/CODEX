@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { NAV_ITEMS } from '../constants';
-import { CodexLogo } from './ui/CodexLogo';
 import { Magnetic } from './ui/Magnetic';
 
 interface NavbarProps {
@@ -14,39 +12,41 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() || 0;
+
+    // Update scrolled state
+    setIsScrolled(latest > 50);
+
+    // Determine visibility
+    if (latest < 50) {
+      setIsVisible(true);
+    } else if (latest > previous && latest > 100) {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+  });
+
+  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Update scrolled state for styling
-      setIsScrolled(currentScrollY > 50);
-      
-      // Determine scroll direction and visibility
-      if (currentScrollY < 50) {
-        // Always show navbar at top of page
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down & past threshold - hide navbar
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling up - show navbar
-        setIsVisible(true);
-      }
-      
-      setLastScrollY(currentScrollY);
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
     };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [isMobileMenuOpen]);
 
   const handleNavClick = (href: string, e: React.MouseEvent) => {
     e.preventDefault();
     if (currentPage !== 'home') {
       onNavigate('home');
-      // Wait for navigation then scroll
       setTimeout(() => {
         const element = document.querySelector(href);
         element?.scrollIntoView({ behavior: 'smooth' });
@@ -58,12 +58,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     setIsMobileMenuOpen(false);
   };
 
-  const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (currentPage === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      onNavigate('home');
+  const menuVariants = {
+    closed: {
+      pathLength: 0,
+      opacity: 0,
+      transition: { duration: 0.5, ease: "easeInOut" }
+    },
+    open: {
+      pathLength: 1,
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeInOut" }
     }
   };
 
@@ -73,12 +77,26 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         initial={{ y: -100 }}
         animate={{ y: isVisible ? 0 : -100 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'py-4' : 'py-6'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-300 pointer-events-none`}
       >
-        <div className="container mx-auto px-6 flex justify-center">
-          <div className={`glass rounded-full px-6 py-3 flex items-center justify-center transition-all duration-500 ease-[0.22,1,0.36,1] ${isScrolled ? 'bg-black/80' : 'bg-black/40'}`}>
+        <div className="container mx-auto px-6 pt-6 flex justify-center pointer-events-auto">
+          <div className={`
+            glass rounded-full px-6 py-3 flex items-center justify-between gap-8
+            transition-all duration-500 ease-[0.22,1,0.36,1]
+            ${isScrolled ? 'bg-black/80 backdrop-blur-xl border-white/10' : 'bg-black/40 backdrop-blur-md border-white/5'}
+            md:min-w-[500px] min-w-[90%]
+          `}>
+
+            {/* Logo area - simple text for now or could be the Logo component if integrated */}
+            {/* Logo area */}
+            <button
+              onClick={() => currentPage === 'home' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : onNavigate('home')}
+              className="z-50 relative hover:opacity-80 transition-opacity"
+              data-cursor="hover"
+            >
+              <img src="/mobile.png" alt="CODEX" className="h-8 w-auto" />
+            </button>
+
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               {NAV_ITEMS.map((item) => (
@@ -86,83 +104,116 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(item.href, e)}
+                    className="relative group overflow-hidden"
                     data-cursor="hover"
-                    className="text-sm font-medium text-muted hover:text-white transition-colors uppercase tracking-wide inline-block"
                   >
-                    {item.label}
+                    <span className="text-sm font-medium text-muted transition-colors group-hover:text-white uppercase tracking-wide inline-block relative z-10">
+                      {item.label}
+                    </span>
+                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-primary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
                   </a>
                 </Magnetic>
               ))}
               <Magnetic>
                 <motion.button
                   onClick={() => onNavigate('register')}
-                  data-cursor="hover"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
                   className="bg-primary text-black px-5 py-2 rounded-full font-bold text-xs uppercase hover:bg-white transition-colors"
+                  data-cursor="hover"
                 >
-                  Register Now
+                  Register
                 </motion.button>
               </Magnetic>
             </div>
 
-            {/* Mobile Toggle */}
+            {/* Mobile Toggle Button */}
             <button
-              className="md:hidden text-white"
-              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-center gap-1.5 focus:outline-none group"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               data-cursor="hover"
             >
-              <Menu />
+              <motion.span
+                animate={isMobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                className="w-6 h-0.5 bg-white origin-center transition-transform duration-300"
+              />
+              <motion.span
+                animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                className="w-6 h-0.5 bg-white transition-opacity duration-300"
+              />
+              <motion.span
+                animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                className="w-6 h-0.5 bg-white origin-center transition-transform duration-300"
+              />
             </button>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Fullscreen Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[60] bg-black flex flex-col items-center justify-center"
+            initial={{ clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[60] bg-black pointer-events-auto overflow-y-auto"
           >
-            <button
-              className="absolute top-8 right-8 text-white/50 hover:text-white"
-              onClick={() => setIsMobileMenuOpen(false)}
-              data-cursor="hover"
-            >
-              <X className="w-8 h-8" />
-            </button>
-            
-            <div className="flex flex-col items-center gap-8">
-              {NAV_ITEMS.map((item, idx) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(item.href, e)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + idx * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="font-display text-4xl font-bold text-white hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </motion.a>
-              ))}
-              <motion.button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onNavigate('register');
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
-                className="mt-4 bg-primary text-black px-8 py-4 rounded-full font-bold text-xl uppercase"
+            {/* Background Pattern/Texture */}
+            <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none fixed" />
+
+            <div className="container mx-auto px-6 h-full min-h-[600px] flex flex-col pt-32 pb-12 relative z-10">
+              <div className="flex flex-col items-center gap-6 flex-1 justify-center">
+                {NAV_ITEMS.map((item, idx) => (
+                  <div key={item.label} className="overflow-hidden">
+                    <motion.a
+                      href={item.href}
+                      onClick={(e) => handleNavClick(item.href, e)}
+                      initial={{ y: "100%" }}
+                      animate={{ y: 0 }}
+                      exit={{ y: "100%" }}
+                      transition={{ delay: 0.1 + idx * 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                      className="font-display text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-secondary hover:opacity-80 transition-all cursor-pointer block py-2 text-center"
+                      data-cursor="hover"
+                    >
+                      {item.label}
+                    </motion.a>
+                  </div>
+                ))}
+
+                <div className="overflow-hidden mt-8 w-full max-w-xs">
+                  <motion.button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onNavigate('register');
+                    }}
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{ delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="w-full bg-primary text-black px-8 py-4 rounded-full font-bold text-xl uppercase hover:bg-white transition-colors"
+                    data-cursor="hover"
+                  >
+                    Register Now
+                  </motion.button>
+                </div>
+              </div>
+
+              {/* Footer Information in Menu */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="text-center mt-12"
               >
-                Register Now
-              </motion.button>
+                <p className="text-muted text-sm uppercase tracking-widest mb-2">Code The Future</p>
+                <div className="flex justify-center gap-4 text-white/50">
+                  <span>VOL 2.0</span>
+                  <span>•</span>
+                  <span>2026</span>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         )}
