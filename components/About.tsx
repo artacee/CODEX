@@ -225,8 +225,8 @@ export const About: React.FC = () => {
       {/* Bottom content - Bento-style cards */}
       <div className="py-20 md:py-32">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {/* Card 1 - The Genesis */}
+          <div className="flex flex-col gap-6 md:gap-8">
+            {/* Card 0 - The Institute */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -243,94 +243,153 @@ export const About: React.FC = () => {
 
               <div className="relative">
                 <span className="inline-block text-primary font-mono text-xs tracking-[0.2em] mb-6 px-3 py-1 border border-primary/30 rounded-full">
-                  <TextScramble delay={200}>THE GENESIS</TextScramble>
+                  <TextScramble delay={200}>THE INSTITUTE</TextScramble>
                 </span>
 
                 <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
-                  Department of<br />
-                  <span className="text-white/40">Computer Science</span>
+                  T.K.M. Institute of <span className="text-white/40">Technology</span>
                 </h3>
 
-                <p className="text-muted text-lg leading-relaxed mb-8">
-                  Established in <span className="text-white font-semibold">2002</span>, our department is the largest at TKM Institute of Technology. With over <span className="text-white font-semibold"><Counter value={2400} suffix="+" duration={2} /></span> students across the college, nearly <span className="text-white font-semibold"><Counter value={70} suffix="%" duration={1.5} /></span> belong to Computer Science — a testament to our excellence in tech education.
-                </p>
-
-                {/* Stats grid */}
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                   <div>
-                    <span className="block text-2xl md:text-3xl font-display font-bold text-primary">
-                      <Counter value={22} suffix="+" duration={1.5} />
-                    </span>
-                    <span className="text-xs text-muted uppercase tracking-wider">Years</span>
+                    <p className="text-muted text-lg leading-relaxed mb-6">
+                      <RevealText delay={0.3}>
+                        Established by the T.K.M. College Trust, the institute is set on a picturesque 25-acre green campus known as Musaliar Hills at Karuvelil, Kollam.
+                      </RevealText>
+                    </p>
+                    <p className="text-muted text-lg leading-relaxed">
+                      <RevealText delay={0.4}>
+                        Founded in 2002, the institute is approved by AICTE and affiliated to APJ Abdul Kalam Technological University. It is located about 23 km from Kollam city.
+                      </RevealText>
+                    </p>
                   </div>
                   <div>
-                    <span className="block text-2xl md:text-3xl font-display font-bold text-white">
-                      <Counter value={840} suffix="+" duration={2} />
-                    </span>
-                    <span className="text-xs text-muted uppercase tracking-wider">CS Students</span>
-                  </div>
-                  <div>
-                    <span className="block text-2xl md:text-3xl font-display font-bold text-white">
-                      <Counter value={70} suffix="%" duration={1.5} />
-                    </span>
-                    <span className="text-xs text-muted uppercase tracking-wider">Of College</span>
+                    <h4 className="text-white font-semibold mb-4">Programmes Offered</h4>
+                    <p className="text-muted text-lg leading-relaxed mb-6">
+                      <RevealText delay={0.5}>
+                        The institute offers B.Tech programmes in seven disciplines: Biomedical, Civil, CSE, CSE (AI), AI & ML, Food Technology, and Mechanical Engineering.
+                      </RevealText>
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10">
+                        <span className="text-primary font-bold">NBA</span> Accredited
+                      </div>
+                      <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10">
+                        <span className="text-primary font-bold">NAAC</span> Accredited
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Card 2 - The Event */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-8 md:p-12 overflow-hidden hover:border-secondary/20 transition-colors duration-500"
-              data-cursor="hover"
-            >
-              {/* Hover gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {/* Card 1 - The Genesis */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-8 md:p-12 overflow-hidden hover:border-primary/20 transition-colors duration-500"
+                data-cursor="hover"
+              >
+                {/* Hover gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-              {/* Corner decoration */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-[4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Corner decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-[4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              <div className="relative">
-                <span className="inline-block text-secondary font-mono text-xs tracking-[0.2em] mb-6 px-3 py-1 border border-secondary/30 rounded-full">
-                  <TextScramble delay={400}>THE EVENT</TextScramble>
-                </span>
+                <div className="relative">
+                  <span className="inline-block text-primary font-mono text-xs tracking-[0.2em] mb-6 px-3 py-1 border border-primary/30 rounded-full">
+                    <TextScramble delay={200}>THE GENESIS</TextScramble>
+                  </span>
 
-                <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
-                  <span className="text-secondary"><Counter value={24} duration={1.5} /></span> Hours of<br />
-                  <span className="text-white/40">Pure Innovation</span>
-                </h3>
+                  <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
+                    Department of<br />
+                    <span className="text-white/40">Computer Science</span>
+                  </h3>
 
-                <p className="text-muted text-lg leading-relaxed mb-8">
-                  A high-intensity hackathon where teams ideate, design, and build practical solutions to real-world problems. <span className="text-white font-semibold"><Counter value={100} suffix="+" duration={1.5} /></span> teams compete across <span className="text-white font-semibold"><Counter value={5} duration={1} /></span> specialized tracks.
-                </p>
+                  <p className="text-muted text-lg leading-relaxed mb-8">
+                    Established in <span className="text-white font-semibold">2002</span>, our department is the largest at TKM Institute of Technology. With over <span className="text-white font-semibold"><Counter value={2400} suffix="+" duration={2} /></span> students across the college, nearly <span className="text-white font-semibold"><Counter value={70} suffix="%" duration={1.5} /></span> belong to Computer Science — a testament to our excellence in tech education.
+                  </p>
 
-                {/* Stats grid */}
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
-                  <div>
-                    <span className="block text-2xl md:text-3xl font-display font-bold text-secondary">
-                      <Counter value={100} suffix="+" duration={1.5} />
-                    </span>
-                    <span className="text-xs text-muted uppercase tracking-wider">Teams</span>
-                  </div>
-                  <div>
-                    <span className="block text-2xl md:text-3xl font-display font-bold text-white">
-                      <Counter value={5} duration={1} />
-                    </span>
-                    <span className="text-xs text-muted uppercase tracking-wider">Tracks</span>
-                  </div>
-                  <div>
-                    <span className="block text-2xl md:text-3xl font-display font-bold text-white">
-                      <Counter value={20} suffix="+" duration={1.5} />
-                    </span>
-                    <span className="text-xs text-muted uppercase tracking-wider">Mentors</span>
+                  {/* Stats grid */}
+                  <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+                    <div>
+                      <span className="block text-2xl md:text-3xl font-display font-bold text-primary">
+                        <Counter value={22} suffix="+" duration={1.5} />
+                      </span>
+                      <span className="text-xs text-muted uppercase tracking-wider">Years</span>
+                    </div>
+                    <div>
+                      <span className="block text-2xl md:text-3xl font-display font-bold text-white">
+                        <Counter value={840} suffix="+" duration={2} />
+                      </span>
+                      <span className="text-xs text-muted uppercase tracking-wider">CS Students</span>
+                    </div>
+                    <div>
+                      <span className="block text-2xl md:text-3xl font-display font-bold text-white">
+                        <Counter value={70} suffix="%" duration={1.5} />
+                      </span>
+                      <span className="text-xs text-muted uppercase tracking-wider">Of College</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* Card 2 - The Event */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-8 md:p-12 overflow-hidden hover:border-secondary/20 transition-colors duration-500"
+                data-cursor="hover"
+              >
+                {/* Hover gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                {/* Corner decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-[4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="relative">
+                  <span className="inline-block text-secondary font-mono text-xs tracking-[0.2em] mb-6 px-3 py-1 border border-secondary/30 rounded-full">
+                    <TextScramble delay={400}>THE EVENT</TextScramble>
+                  </span>
+
+                  <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
+                    <span className="text-secondary"><Counter value={24} duration={1.5} /></span> Hours of<br />
+                    <span className="text-white/40">Pure Innovation</span>
+                  </h3>
+
+                  <p className="text-muted text-lg leading-relaxed mb-8">
+                    A high-intensity hackathon where teams ideate, design, and build practical solutions to real-world problems. <span className="text-white font-semibold"><Counter value={100} suffix="+" duration={1.5} /></span> teams compete across <span className="text-white font-semibold"><Counter value={5} duration={1} /></span> specialized tracks.
+                  </p>
+
+                  {/* Stats grid */}
+                  <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+                    <div>
+                      <span className="block text-2xl md:text-3xl font-display font-bold text-secondary">
+                        <Counter value={100} suffix="+" duration={1.5} />
+                      </span>
+                      <span className="text-xs text-muted uppercase tracking-wider">Teams</span>
+                    </div>
+                    <div>
+                      <span className="block text-2xl md:text-3xl font-display font-bold text-white">
+                        <Counter value={5} duration={1} />
+                      </span>
+                      <span className="text-xs text-muted uppercase tracking-wider">Tracks</span>
+                    </div>
+                    <div>
+                      <span className="block text-2xl md:text-3xl font-display font-bold text-white">
+                        <Counter value={20} suffix="+" duration={1.5} />
+                      </span>
+                      <span className="text-xs text-muted uppercase tracking-wider">Mentors</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
 
 
