@@ -252,7 +252,7 @@ export const About: React.FC = () => {
                 </h3>
                 
                 <p className="text-muted text-lg leading-relaxed mb-8">
-                  Established in <span className="text-white font-semibold">2002</span>, our department is the largest at TKM College of Engineering. With over <span className="text-white font-semibold"><Counter value={2400} suffix="+" duration={2} /></span> students across the college, nearly <span className="text-white font-semibold"><Counter value={70} suffix="%" duration={1.5} /></span> belong to Computer Science — a testament to our excellence in tech education.
+                  Established in <span className="text-white font-semibold">2002</span>, our department is the largest at TKM Institute of Technology. With over <span className="text-white font-semibold"><Counter value={2400} suffix="+" duration={2} /></span> students across the college, nearly <span className="text-white font-semibold"><Counter value={70} suffix="%" duration={1.5} /></span> belong to Computer Science — a testament to our excellence in tech education.
                 </p>
                 
                 {/* Stats grid */}
