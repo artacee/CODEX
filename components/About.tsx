@@ -16,16 +16,16 @@ const AnimatedLine: React.FC<{ className?: string; delay?: number }> = ({ classN
 );
 
 // Text reveal component with stagger
-const RevealText: React.FC<{ children: string; className?: string; delay?: number }> = ({ 
-  children, 
+const RevealText: React.FC<{ children: string; className?: string; delay?: number }> = ({
+  children,
   className = '',
-  delay = 0 
+  delay = 0
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  
+
   const words = children.split(' ');
-  
+
   return (
     <span ref={ref} className={className}>
       {words.map((word, i) => (
@@ -33,8 +33,8 @@ const RevealText: React.FC<{ children: string; className?: string; delay?: numbe
           <motion.span
             initial={{ y: '100%' }}
             animate={isInView ? { y: 0 } : {}}
-            transition={{ 
-              duration: 0.5, 
+            transition={{
+              duration: 0.5,
               delay: delay + i * 0.03,
               ease: [0.22, 1, 0.36, 1]
             }}
@@ -54,7 +54,7 @@ export const About: React.FC = () => {
     target: containerRef,
     offset: ["start end", "end start"]
   });
-  
+
   // Parallax values
   const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [50, -150]);
@@ -62,15 +62,15 @@ export const About: React.FC = () => {
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 15]);
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id="about" 
+      id="about"
       className="relative bg-surface overflow-hidden"
     >
       {/* Floating grid pattern */}
       <div className="absolute inset-0 opacity-[0.02]">
-        <div 
-          className="absolute inset-0" 
+        <div
+          className="absolute inset-0"
           style={{
             backgroundImage: `
               linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -80,15 +80,15 @@ export const About: React.FC = () => {
           }}
         />
       </div>
-      
+
       {/* Massive floating numbers - parallax */}
-      <motion.div 
+      <motion.div
         style={{ y: y1 }}
         className="absolute -top-20 -left-20 text-[20rem] md:text-[35rem] font-bold text-white/[0.015] pointer-events-none select-none font-display leading-none z-0"
       >
         01
       </motion.div>
-      <motion.div 
+      <motion.div
         style={{ y: y2, rotate }}
         className="absolute top-1/2 -right-32 text-[15rem] md:text-[25rem] font-bold text-primary/[0.03] pointer-events-none select-none font-display leading-none z-0"
       >
@@ -100,7 +100,7 @@ export const About: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             {/* Left column - Section label */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -176,9 +176,9 @@ export const About: React.FC = () => {
                     The Department of Computer Science at TKM Institute of Technology has been a cornerstone of technological education since 2002, nurturing the next generation of innovators and tech leaders.
                   </RevealText>
                 </p>
-                
+
                 <AnimatedLine className="w-24 h-[2px] bg-gradient-to-r from-primary to-secondary mb-8" delay={0.6} />
-                
+
                 <p className="text-lg text-muted/80 leading-relaxed">
                   <RevealText delay={0.7}>
                     CODEX is our flagship 24-hour hackathon where creativity meets code. Teams collaborate intensively to build solutions for real-world challenges, pushing the boundaries of what's possible.
@@ -188,7 +188,7 @@ export const About: React.FC = () => {
             </div>
 
             {/* Right column - Visual element */}
-            <motion.div 
+            <motion.div
               style={{ y: y3 }}
               className="lg:col-span-3 relative hidden lg:block"
             >
@@ -237,24 +237,24 @@ export const About: React.FC = () => {
             >
               {/* Hover gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              
+
               {/* Corner decoration */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-[4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+
               <div className="relative">
                 <span className="inline-block text-primary font-mono text-xs tracking-[0.2em] mb-6 px-3 py-1 border border-primary/30 rounded-full">
                   <TextScramble delay={200}>THE GENESIS</TextScramble>
                 </span>
-                
+
                 <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
                   Department of<br />
                   <span className="text-white/40">Computer Science</span>
                 </h3>
-                
+
                 <p className="text-muted text-lg leading-relaxed mb-8">
                   Established in <span className="text-white font-semibold">2002</span>, our department is the largest at TKM Institute of Technology. With over <span className="text-white font-semibold"><Counter value={2400} suffix="+" duration={2} /></span> students across the college, nearly <span className="text-white font-semibold"><Counter value={70} suffix="%" duration={1.5} /></span> belong to Computer Science — a testament to our excellence in tech education.
                 </p>
-                
+
                 {/* Stats grid */}
                 <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
                   <div>
@@ -290,24 +290,24 @@ export const About: React.FC = () => {
             >
               {/* Hover gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              
+
               {/* Corner decoration */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-[4rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+
               <div className="relative">
                 <span className="inline-block text-secondary font-mono text-xs tracking-[0.2em] mb-6 px-3 py-1 border border-secondary/30 rounded-full">
                   <TextScramble delay={400}>THE EVENT</TextScramble>
                 </span>
-                
+
                 <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
                   <span className="text-secondary"><Counter value={24} duration={1.5} /></span> Hours of<br />
                   <span className="text-white/40">Pure Innovation</span>
                 </h3>
-                
+
                 <p className="text-muted text-lg leading-relaxed mb-8">
                   A high-intensity hackathon where teams ideate, design, and build practical solutions to real-world problems. <span className="text-white font-semibold"><Counter value={100} suffix="+" duration={1.5} /></span> teams compete across <span className="text-white font-semibold"><Counter value={5} duration={1} /></span> specialized tracks.
                 </p>
-                
+
                 {/* Stats grid */}
                 <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
                   <div>
@@ -333,29 +333,7 @@ export const About: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* Bottom tagline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-center mt-16 md:mt-24"
-          >
-            <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto">
-              Join us in shaping the future of technology.{' '}
-              <span className="text-primary">Be part of the revolution.</span>
-            </p>
-            <button
-            type="button"
-            aria-label="Email collab at codextki.dev to become a sponsor"
-            onClick={() => {
-                window.location.href = 'mailto:collab@codextki.dev?subject=Become%20a%20Sponsor%20-%20CODEX%20Hackathon';
-            }}
-            className="inline-block mt-8 px-8 py-4 rounded-full bg-primary text-white font-bold text-lg shadow-lg hover:bg-secondary transition-colors duration-300 cursor-pointer"
-            >
-            Become a Sponsor
-            </button>
-          </motion.div>
+
         </div>
       </div>
     </section>

@@ -23,8 +23,8 @@ export const Counter: React.FC<CounterProps> = ({
   decimals = 0,
 }) => {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  
+  const isInView = useInView(ref, { once: true, margin: '-10px' });
+
   const spring = useSpring(direction === 'up' ? 0 : value, {
     mass: 1,
     stiffness: 75,
@@ -84,8 +84,8 @@ export const CurrencyCounter: React.FC<CurrencyCounterProps> = ({
   className = '',
 }) => {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  
+  const isInView = useInView(ref, { once: true, margin: '-10px' });
+
   const spring = useSpring(0, {
     mass: 1,
     stiffness: 50,
@@ -141,14 +141,14 @@ export const SlotCounter: React.FC<SlotCounterProps> = ({
   className = '',
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-10px' });
   const chars = String(value).split('');
 
   return (
     <div ref={ref} className={`inline-flex overflow-hidden ${className}`}>
       {chars.map((char, index) => {
         const isNumber = /\d/.test(char);
-        
+
         if (!isNumber) {
           return (
             <motion.span

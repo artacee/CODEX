@@ -24,23 +24,23 @@ export const TextScramble: React.FC<TextScrambleProps> = ({
   const [isScrambling, setIsScrambling] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-10px' });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const scramble = () => {
     if (hasAnimated && trigger !== 'hover') return;
-    
+
     setIsScrambling(true);
     setHasAnimated(true);
-    
+
     const originalText = children;
     const length = originalText.length;
     let iteration = 0;
-    
+
     // Clear any existing intervals
     if (intervalRef.current) clearInterval(intervalRef.current);
-    
+
     intervalRef.current = setInterval(() => {
       setDisplayText(
         originalText
@@ -48,21 +48,21 @@ export const TextScramble: React.FC<TextScrambleProps> = ({
           .map((char, index) => {
             // Keep spaces as spaces
             if (char === ' ') return ' ';
-            
+
             // Characters before the current iteration are revealed
             if (index < iteration) {
               return originalText[index];
             }
-            
+
             // Characters at or after iteration get scrambled
             return characters[Math.floor(Math.random() * characters.length)];
           })
           .join('')
       );
-      
+
       // Increment based on speed - faster speed = more characters per tick
       iteration += 1 / (speed / scrambleSpeed);
-      
+
       if (iteration >= length) {
         if (intervalRef.current) clearInterval(intervalRef.current);
         setDisplayText(originalText);
@@ -75,7 +75,7 @@ export const TextScramble: React.FC<TextScrambleProps> = ({
     if (trigger === 'mount') {
       timeoutRef.current = setTimeout(scramble, delay);
     }
-    
+
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -106,11 +106,10 @@ export const TextScramble: React.FC<TextScrambleProps> = ({
       {displayText.split('').map((char, i) => (
         <span
           key={i}
-          className={`inline-block ${
-            isScrambling && char !== children[i] && char !== ' '
+          className={`inline-block ${isScrambling && char !== children[i] && char !== ' '
               ? 'text-primary'
               : ''
-          }`}
+            }`}
           style={{
             transition: 'color 0.1s ease',
           }}
@@ -155,7 +154,7 @@ export const DecodeText: React.FC<DecodeTextProps> = ({
             char === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)]
           )
           .join('');
-        
+
         setDisplayText(revealed + encrypted);
         setCurrentIndex((prev) => prev + 1);
       }
@@ -183,9 +182,8 @@ export const DecodeText: React.FC<DecodeTextProps> = ({
       {displayText.split('').map((char, i) => (
         <span
           key={i}
-          className={`inline-block ${
-            i >= currentIndex - 1 && char !== ' ' ? 'text-primary' : ''
-          }`}
+          className={`inline-block ${i >= currentIndex - 1 && char !== ' ' ? 'text-primary' : ''
+            }`}
         >
           {char === ' ' ? '\u00A0' : char}
         </span>

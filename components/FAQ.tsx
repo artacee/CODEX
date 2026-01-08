@@ -16,13 +16,32 @@ export const FAQ: React.FC = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(EMAIL);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-    }
+    const copyToClipboard = async (text: string) => {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          // Fallback for non-secure contexts (mobile LAN)
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.style.position = "absolute";
+          textArea.style.opacity = "0";
+          textArea.style.left = "-9999px";
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+        }
+        return true;
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        return false;
+      }
+    };
+
+    await copyToClipboard(EMAIL);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const { scrollYProgress } = useScroll({
@@ -310,8 +329,8 @@ export const FAQ: React.FC = () => {
                     data-cursor="text"
                     data-cursor-text={copied ? "Copied!" : "Mail"}
                     className={`relative group/btn overflow-hidden px-10 py-5 rounded-full transition-all duration-500 ${copied
-                        ? 'bg-gradient-to-r from-primary to-primary/90'
-                        : 'bg-white/[0.03] hover:bg-white/[0.08]'
+                      ? 'bg-gradient-to-r from-primary to-primary/90'
+                      : 'bg-white/[0.03] hover:bg-white/[0.08]'
                       }`}
                   >
                     {/* Button glow effect */}
@@ -322,8 +341,8 @@ export const FAQ: React.FC = () => {
 
                     {/* Button border */}
                     <div className={`absolute inset-0 rounded-full border transition-all duration-500 ${copied
-                        ? 'border-primary/50'
-                        : 'border-white/10 group-hover/btn:border-primary/30'
+                      ? 'border-primary/50'
+                      : 'border-white/10 group-hover/btn:border-primary/30'
                       }`} />
 
                     {/* Button content */}
