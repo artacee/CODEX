@@ -159,7 +159,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
 
           {/* Footer Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pt-16 border-t border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 pt-16 border-t border-white/10">
             {/* Brand */}
             <div className="lg:col-span-1">
               <CodexLogo className="h-12 w-auto mb-6" />
@@ -224,6 +224,45 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   </a>
                 </li>
               </ul>
+            </div>
+
+            {/* Coordinators */}
+            <div>
+              <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-6">Coordinators</h4>
+              <div className="space-y-6">
+                {/* Faculty */}
+                <div className="space-y-2">
+                  <p className="text-xs text-primary font-mono uppercase tracking-wider">Faculty In Charge</p>
+                  <ul className="space-y-2">
+                    <li>
+                      <div className="text-muted text-sm leading-tight">Asst. Prof. Jomi George</div>
+                      <a href="tel:+919447996192" className="text-xs text-white/50 hover:text-primary transition-colors">+91 94479 96192</a>
+                    </li>
+                    <li>
+                      <div className="text-muted text-sm leading-tight">Asst. Prof. Syamraj B S</div>
+                      <a href="tel:+919400623692" className="text-xs text-white/50 hover:text-primary transition-colors">+91 94006 23692</a>
+                    </li>
+                  </ul>
+                </div>
+                {/* Students */}
+                <div className="space-y-2">
+                  <p className="text-xs text-primary font-mono uppercase tracking-wider">Student Coordinators</p>
+                  <ul className="space-y-2">
+                    <li>
+                      <div className="text-muted text-sm leading-tight">Irfan Jazeer</div>
+                      <a href="tel:+918078939321" className="text-xs text-white/50 hover:text-primary transition-colors">+91 80789 39321</a>
+                    </li>
+                    <li>
+                      <div className="text-muted text-sm leading-tight">Aadith P Soman</div>
+                      <a href="tel:+919400789095" className="text-xs text-white/50 hover:text-primary transition-colors">+91 94007 89095</a>
+                    </li>
+                    <li>
+                      <div className="text-muted text-sm leading-tight">Ajmal Mohammed</div>
+                      <a href="tel:+919946372408" className="text-xs text-white/50 hover:text-primary transition-colors">+91 99463 72408</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             {/* Status */}

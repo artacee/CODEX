@@ -176,7 +176,7 @@ export const About: React.FC = () => {
               >
                 <p className="text-xl md:text-2xl text-muted leading-relaxed mb-8">
                   <RevealText delay={0.5}>
-                    The Department of Computer Science at TKM Institute of Technology has been a cornerstone of technological education since 2002, nurturing the next generation of innovators and tech leaders.
+                    The Department of Computer Science & Engineering at TKM Institute of Technology has been a cornerstone of technological education since 2002, nurturing the next generation of innovators and tech leaders.
                   </RevealText>
                 </p>
 
@@ -278,9 +278,6 @@ export const About: React.FC = () => {
                       <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10">
                         <span className="text-primary font-bold">NBA</span> Accredited
                       </div>
-                      <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10">
-                        <span className="text-primary font-bold">NAAC</span> Accredited
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -310,11 +307,11 @@ export const About: React.FC = () => {
 
                   <h3 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-tight">
                     Department of<br />
-                    <span className="text-white/40">Computer Science</span>
+                    <span className="text-white/40">Computer Science & Engineering</span>
                   </h3>
 
                   <p className="text-muted text-lg leading-relaxed mb-8">
-                    Established in <span className="text-white font-semibold">2002</span>, our department is the largest at TKM Institute of Technology. With over <span className="text-white font-semibold"><Counter value={2400} suffix="+" duration={2} /></span> students across the college, nearly <span className="text-white font-semibold"><Counter value={70} suffix="%" duration={1.5} /></span> belong to Computer Science — a testament to our excellence in tech education.
+                    Established in <span className="text-white font-semibold">2002</span>, our department is the largest at TKM Institute of Technology. With over <span className="text-white font-semibold"><Counter value={2400} suffix="+" duration={2} /></span> students across the college, nearly <span className="text-white font-semibold"><Counter value={70} suffix="%" duration={1.5} /></span> belong to Computer Science & Engineering — a testament to our excellence in tech education.
                   </p>
 
                   {/* Stats grid */}
