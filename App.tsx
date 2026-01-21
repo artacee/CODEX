@@ -10,25 +10,17 @@ import { Scene3D } from './components/Scene3D';
 import { HackerMode } from './components/HackerMode';
 import { GravityPlayground } from './components/game/GravityPlayground';
 import { CreditsMode } from './components/CreditsMode';
-import { SpotlightReveal } from './components/SpotlightReveal';
 import { useGravityTrigger } from './hooks/useGravityTrigger';
 import { useWordTrigger } from './hooks/useWordTrigger';
 import Lenis from 'lenis';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [showDeadlinePopup, setShowDeadlinePopup] = useState(false);
   const [currentPage, setCurrentPage] = useState('home');
   const lenisRef = useRef<Lenis | null>(null);
 
   const { isActive: isGravityActive, setIsActive: setIsGravityActive, trigger: triggerGravity } = useGravityTrigger();
   const { triggered: isCreditsTriggered, setTriggered: setCreditsTriggered } = useWordTrigger('CREDITS.');
-
-  // Show deadline popup after loading completes
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-    setShowDeadlinePopup(true);
-  };
 
   // Initialize Lenis smooth scroll
   useEffect(() => {
@@ -99,7 +91,7 @@ const App: React.FC = () => {
       <HackerMode />
 
       <AnimatePresence>
-        {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />}
+        {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
       </AnimatePresence>
 
       {!isLoading && (
@@ -123,14 +115,6 @@ const App: React.FC = () => {
           <AnimatePresence>
             {isCreditsTriggered && <CreditsMode onClose={() => setCreditsTriggered(false)} />}
           </AnimatePresence>
-
-          {/* Deadline Spotlight Reveal Popup */}
-          {showDeadlinePopup && (
-            <SpotlightReveal
-              onComplete={() => setShowDeadlinePopup(false)}
-              duration={15000}
-            />
-          )}
 
           {/* Navigation - Persistent */}
           <Navbar currentPage={currentPage} onNavigate={handleNavigate} onLogoClick={triggerGravity} />
